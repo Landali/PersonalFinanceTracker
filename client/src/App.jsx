@@ -8,6 +8,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import Sidebar from "./Components/Sidebar";
 import Nav from './Components/Nav';
 import { useState } from "react";
+import Profile from "./Containers/Profile";
 const router = createBrowserRouter([
   {
     path: '/',
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
     path: '/dashboard',
     element: <Dashboard />,
     //    loader: dashboardLoader
+  },
+  {
+    path: '/profile',
+    element: <Profile />,
   },
   {
     path: '/about',

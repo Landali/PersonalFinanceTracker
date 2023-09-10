@@ -10,7 +10,7 @@ const Sidebar = ({ toggle }) => {
                 </div>
                 <ul className='sidebar-nav'>
                     <li className='sidebar-header'>
-                    <span id='sidebar-welcome-tag' className="brand-name">Bienvenido: Allan Danilo Paz D' Elia</span>
+                    <span id='sidebar-welcome-tag' className="brand-name">Bienvenido: Allan Danilo Paz  D' Elia</span>
                     <hr></hr>
                     </li>
                     <li className='sidebar-item rounded'>

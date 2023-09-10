@@ -1,0 +1,130 @@
+#card {
+    border-radius: .5rem;
+}
+
+.profile-logo{
+    padding: 1.15rem 1.5rem;
+}
+
+#profile-icon {
+    color: #e9ecef;
+}
+
+#profile-title-tag {
+    color: #e9ecef;
+    font-weight: bolder;
+    font-family: 'Poppins', sans-serif;
+}
+
+#profile-container {
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+
+#avatar-img {
+    width: 80px;
+}
+
+
+.img-account-profile {
+    height: 10rem;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.form-control, .dataTable-input {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #69707a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5ccd6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.35rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
+/*Form labels*/
+
+#profile-label {
+    font-size: 1rem;
+    color: #e9ecef;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+
+/*Form inputs*/
+#inputUsername {
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+#inputUsername:hover {
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    transition: all .2s ease-out;
+}
+
+#profile-lbl-description {
+    font-size: 0.78rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+
+#inputFirstName {
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+
+#inputFirstName:hover {
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    transition: all .2s ease-out;
+}
+
+#inputLastName {
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+
+#inputLastName:hover {
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    transition: all .2s ease-out;
+}
+
+#inputEmailAddress {
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+
+#inputEmailAddress:hover {
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    transition: all .2s ease-out;
+}
+
+
+/*Form buttons*/
+
+#profile-save-btn{
+    padding-left:  0.4rem;
+}
+#profile-clear-btn{
+    padding-left:  0.4rem;
+}
