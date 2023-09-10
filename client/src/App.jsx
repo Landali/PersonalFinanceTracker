@@ -39,23 +39,14 @@ function App() {
 
   return (
     <div className="App">
-      <div className="container-fluid bg-dark bg-gradient  min-vh-100">
-        <div className="row">
-          {toggle && <div className="sidebard-container col-2 col-md-2 col-ms-2 bg-white vh-100 rounded-2">
-            <Sidebar></Sidebar>
-          </div>}
-          <div className="col">
-            <div>
-              <Nav Toggle={Toggle} />
-              <RouterProvider router={router} />
-
-            </div>
-
-
-
+      <div className="wrapper">
+        <Sidebar toggle={toggle} />
+        <div className="main">
+          <Nav Toggle={Toggle}></Nav>
+          <div id='components'>
+            <RouterProvider router={router} />
           </div>
         </div>
-
 
       </div>
     </div>

@@ -14,17 +14,13 @@ const Dashboard = () => {
   // }
   console.log('Dashboard data retrieved: ', dashboard)
   return (
-    <div>
-    <div className="row g-3 my-2">
-      <div className="col-md-3">
-      
-        <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
-        Dashboard
-        </div>
+    <div className='col-md-10 mx-auto center-block' >
+      <div id='dashboard-table-container' className="p-3 bg-white shadow-sm  d-flex justify-content-around align-items-center rounded">
+
       </div>
+
     </div>
 
-</div>
   )
 }
 

@@ -1,16 +1,106 @@
-.sidebar {
- width: 215px;
- 
+#sidebar-drop-item {
+    padding-left: 10%;
 }
-.list-group a:hover {
-    background-color:aqua;
-    color:white;
+
+#sidebar-welcome-tag {
+    color: #02060ade;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
+
+#sidebar-username-tag {
+    color: #02060ade;
+    font-weight: bolder;
+    font-family: 'Poppins', sans-serif;
+}
+
+a {
     cursor: pointer;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
 }
-.sidebard-container {
-    background-image: url('https://mdbcdn.b-cdn.net/img/Photos/Others/images/76.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border:none;
+
+li {
+    list-style: none;
+}
+
+
+.sidebar-item:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+
+#sidebar {
+    max-width: 250px;
+    min-width: 250px;
+    transition: all 0.35s ease-in-out;
+    box-shadow: 0 0 35px 0 rgba(49, 57, 66, 0.5);
+    z-index: 1111;
+}
+
+/* Sidebar collapse */
+
+#sidebar.collapsed {
+    margin-left: -264px;
+}
+
+.sidebar-logo {
+    padding: 1.15rem 1.5rem;
+}
+
+.sidebar-logo a {
+    color: #e9ecef;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.sidebar-nav {
+    padding: 0;
+}
+
+.sidebar-header {
+    color: #e9ecef;
+    font-size: .75rem;
+    font-weight: bolder;
+    padding: 1.5rem 1.5rem .375rem;
+}
+
+a.sidebar-link {
+    padding: .625rem 1.625rem;
+    color: #e9ecef;
+    position: relative;
+    display: block;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+a.sidebar-link:hover {
+    padding: .625rem 1.625rem;
+    color: #e9ecef;
+    position: relative;
+    display: block;
+    font-size: 1.1rem;
+    font-weight: bolder;
+    transition: all .2s;
+
+}
+
+.sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 2px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    transform: rotate(-135deg);
+    transition: all .3s ease-out;
+}
+
+.sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+    transition: all .2s ease-out;
 }
