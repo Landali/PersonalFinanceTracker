@@ -1,0 +1,16 @@
+.sidebar {
+ width: 215px;
+ 
+}
+.list-group a:hover {
+    background-color:aqua;
+    color:white;
+    cursor: pointer;
+}
+.sidebard-container {
+    background-image: url('https://mdbcdn.b-cdn.net/img/Photos/Others/images/76.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border:none;
+}

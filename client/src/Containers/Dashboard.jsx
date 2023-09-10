@@ -8,16 +8,22 @@ const Dashboard = () => {
     const {dashboard, dashBoardTable, auth } = useGlobalContext()
     useEffect(() => {
         dashBoardTable()
-    }, [auth])
-    if (!auth) {
-        return <h1>Denied</h1>
-        
-    }
+    }, [])
+    // if (!auth) {
+    //     return <h1>Denied</h1>
+    // }
     console.log('Dashboard data retrieved: ', dashboard)
     return (
         <div>
-
-            Dashboard
+                <div className="row g-3 my-2">
+                  <div className="col-md-3">
+                  
+                    <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                    Dashboard
+                    </div>
+                  </div>
+                </div>
+            
         </div>
     )
 }
