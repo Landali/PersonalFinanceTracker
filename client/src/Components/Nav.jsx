@@ -11,16 +11,27 @@ const Nav = ({Toggle}) => {
             </button>
             <div className="collapse navbar-collapse" id="collapsibleNavId">
                 <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
-                    <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle text-white" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Allan
-                        </a>
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a className="dropdown-item" href="#">Profile</a>
-                            <a className="dropdown-item" href="#">Setting</a>
-                            <a className="dropdown-item" href="#">Logout</a>
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Logout</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Messages</a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Profile</a>
+                            <a href="#" class="dropdown-item">Budget</a>
+                            <a href="#" class="dropdown-item">Logout</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#"class="dropdown-item">Trash</a>
                         </div>
                     </li>
+                </ul>
                 </ul>
             </div>
         </nav>)

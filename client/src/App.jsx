@@ -32,25 +32,23 @@ function App() {
   const global = useGlobalContext()
   console.log('context', global)
 
-const [toggle, setToggle] = useState(true)
-const Toggle = () =>{
-  setToggle(!toggle)
-}
+  const [toggle, setToggle] = useState(true)
+  const Toggle = () => {
+    setToggle(!toggle)
+  }
 
   return (
     <div className="App">
-      <div className="container-fluid bg-dark bg-gradient min-vh-100">
+      <div className="container-fluid bg-dark bg-gradient  min-vh-100">
         <div className="row">
-          {toggle && <div className="sidebard-container col-2 bg-white vh-100 rounded-2">
+          {toggle && <div className="sidebard-container col-2 col-md-2 col-ms-2 bg-white vh-100 rounded-2">
             <Sidebar></Sidebar>
           </div>}
           <div className="col">
             <div>
               <Nav Toggle={Toggle} />
-              <div className="container-fluid">
-                <RouterProvider router={router} />
+              <RouterProvider router={router} />
 
-              </div>
             </div>
 
 
