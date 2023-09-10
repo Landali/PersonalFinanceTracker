@@ -1,0 +1,22 @@
+.dropdown-menu-right {
+    right: 0 !important; 
+    left: auto !important;
+}
+
+.nav-link {
+    color: #e9ecef;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: #e9ecef;
+    font-size: 1.1rem;
+    font-weight: bolder;
+    transition: all .2s;
+
+}
+
+.nav-item:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
