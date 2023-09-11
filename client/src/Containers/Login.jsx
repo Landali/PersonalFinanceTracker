@@ -57,7 +57,7 @@ const Login = () => {
     }
 
     return (
-        <div className='col-md-6 mx-auto center-block' >
+        <div className='col-md-5 mx-auto center-block' >
             <div className="p-3 bg-dark bg-gradient bg-opacity-75 shadow-sm d-flex justify-content-around align-items-center rounded">
 
                 <div className='col-md-8 mx-auto center-block'>

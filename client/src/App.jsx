@@ -20,23 +20,24 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <Dashboard />,
-    //    loader: dashboardLoader
+    errorElement: <Error />,
   },
   {
     path: '/profile',
     element: <Profile />,
+    errorElement: <Error />,
   },
   {
     path: '/signin',
     element: <Registration />,
+    errorElement: <Error />,
   },
   {
     path: '/about',
     element: <h1>About</h1>,
+    errorElement: <Error />,
   }
 ]);
-
-
 
 function App() {
 
@@ -47,8 +48,8 @@ function App() {
     checkAuth()
     setAuth(token)
   }, [auth]);
-  
-  const [toggle, setToggle] = useState(true)
+
+  const [toggle, setToggle] = useState(false)
   const Toggle = () => {
     setToggle(!toggle)
   }
@@ -56,9 +57,10 @@ function App() {
   return (
     <div className="App">
       <div className="wrapper">
-        <Sidebar toggle={toggle} />
+        {!auth ? <div></div> : <Sidebar toggle={toggle} />}
         <div className="main">
-          <Nav Toggle={Toggle}></Nav>
+        {!auth ? <div></div> : <Nav Toggle={Toggle}></Nav>}
+          
           <div id='components'>
             <RouterProvider router={router} />
           </div>
