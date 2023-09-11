@@ -36,13 +36,18 @@ export const GlobalProvider = ({ children }) => {
 
     // User Login & Registration
     const signIn = async (data = {}) => {
-        const response = await axios.get(`${BASE_URL}/user/signin`, { username: data.user, password: data.password })
-        console.log(`Sign in successful for user: ${data.user}`, response.data)
-        setAuth(response.data)
+        const response = await axios.post(`${BASE_URL}/user/signin`, { user: data.user, password: data.password }).catch(err=> {
+            console.error(`Error to Sign In for user: ${data.user}`, err)
+            setAuth(err.response.data.data);
+        })
+        if (response) {
+            console.log(`Sign in successful for user: ${data.user}`, response.data.data)
+            setAuth(response.data.data)
+        }
     }
     const signUp = async (data = {}) => {
         const response = await axios.post(`${BASE_URL}/user/signup`, { username: data.username, email: data.email, password: data.password })
-        console.log(`Sign in successful for user: ${data.user}`, response.data)
+        console.log(`Sign in successful for user: ${data.user}`, response.data.data)
     }
 
     // To add budget, dashboard and profile services.
@@ -73,7 +78,8 @@ export const GlobalProvider = ({ children }) => {
             setError,
             dashBoardTable,
             userProfile,
-            updateUserPorfile
+            updateUserPorfile,
+            signIn
         }}>
             {children}
         </GlobalContext.Provider>

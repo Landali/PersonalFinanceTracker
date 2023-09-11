@@ -8,7 +8,6 @@ require('dotenv').config(); // this is important!
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'pod';
-console.log('current node env: ', process.env.NODE_ENV)
 const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 

@@ -61,25 +61,47 @@ module.exports = {
     async signIn(req, res) {
         console.log('Signing in user ...')
 
-        const user = req.body  
-        const query = { }
+        const user = req.body
+
+        const query = {}
 
         const regex = new RegExp(retrieveRegex('email'));
-   
-        if (!user.email.match(regex)) {
-            query.username = user.username
-        } else {
-            query.email = user.email
-        }
-        
+        const queryKey = user.user.match(regex) ? 'email' : 'username'
+        query[queryKey] = user.user
+  
         const userFound = await Users.findOne({
             where: query
         })
 
-        if (userFound.dataValues) {
-            const validPassword = await Encrypt.comparePassword(user.password, userFound.dataValues.password)
-            if (validPassword) return res.send('Login user')
+        if (userFound) {
+            if (userFound.dataValues) {
+                const validPassword = await Encrypt.comparePassword(user.password, userFound.dataValues.password)
+                if (validPassword) {
+                    return res.status(200).json({
+                        message: 'User signin',
+                        code: 200,
+                        messageCode: 'UseSign',
+                        data: {
+                            username: userFound.dataValues.username,
+                            firstname: userFound.dataValues.firstname,
+                            lastname: userFound.dataValues.lastname,
+                            email: userFound.dataValues.email,
+                        }
+                    })
+                }
+            }
         }
+        return res.status(404).json({
+            message: 'Could not sign in user. User not found.',
+            code: 404,
+            messageCode: 'NotFound',
+            data: {
+                username: '',
+                firstname: '',
+                lastname: '',
+                email: '',
+            }
+        })
     },
     async updateProfile(req, res) {
         console.log('Updating profile ....', req.body)
