@@ -1,11 +1,10 @@
 const express = require('express')
 const router = express.Router()
-// const { Users } = require('../models')
-const { signUp, signIn, updateProfile } = require('../controllers/Users')
+const validateToken = require('../middleware/authenticateToken')
+const { updateProfile } = require('../controllers/Users')
 
 
-router.post('/signin', signIn)
-router.post('/signup', signUp)
-router.post('/updateprofile', updateProfile)
+
+router.post('/updateprofile', validateToken, updateProfile)
 
 module.exports = router

@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard, { dashboardLoader } from "./Containers/Dashboard";
+
+import Dashboard from "./Containers/Dashboard";
 import Login from "./Containers/Login";
 import Error from "./Containers/Error";
 import { useGlobalContext } from './Context/globalContext';
@@ -7,8 +8,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import Sidebar from "./Components/Sidebar";
 import Nav from './Components/Nav';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Profile from "./Containers/Profile";
+import Registration from "./Containers/Registration";
 const router = createBrowserRouter([
   {
     path: '/',
@@ -25,6 +27,10 @@ const router = createBrowserRouter([
     element: <Profile />,
   },
   {
+    path: '/signin',
+    element: <Registration />,
+  },
+  {
     path: '/about',
     element: <h1>About</h1>,
   }
@@ -33,9 +39,15 @@ const router = createBrowserRouter([
 
 
 function App() {
-  const global = useGlobalContext()
-  console.log('context', global)
 
+  const { auth, setAuth, checkAuth } = useGlobalContext()
+  console.log('authState', auth)
+  useEffect(() => {
+    const token = auth || localStorage.getItem('token') || '';
+    checkAuth()
+    setAuth(token)
+  }, [auth]);
+  
   const [toggle, setToggle] = useState(true)
   const Toggle = () => {
     setToggle(!toggle)

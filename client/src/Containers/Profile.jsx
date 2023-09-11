@@ -1,6 +1,7 @@
 import '../Styles/profile.css'
 import React, { useState, useEffect } from "react"
 import { useGlobalContext } from '../Context/globalContext';
+import { useNavigate } from 'react-router-dom';
 
 const inputKeys = {
     inputUsername: 'username',
@@ -10,8 +11,16 @@ const inputKeys = {
     inputEmailAddress: 'email'
 }
 
-const Profile = () => {
+const checkValidSession = (auth, navigate) => {
+    if (!auth) {
+       navigate('/');
+    }
+}
 
+const Profile = () => {
+    const navigate = useNavigate();
+    const { auth, userProfile, updateUserPorfile } = useGlobalContext();
+    checkValidSession(auth, navigate);
     const [state, setState] = useState({
         username: "",
         password: "",
@@ -21,12 +30,12 @@ const Profile = () => {
         isPasswordVisible: false
     })
 
-    const { userProfile, updateUserPorfile } = useGlobalContext()
+
     useEffect(() => {
         setState({
             ...state, ...userProfile
         })
-    }, [userProfile])
+    }, [userProfile, auth])
 
     const handleChange = evt => {
         console.log('Event on change: ', evt)

@@ -8,8 +8,8 @@ const inputKeys = {
     inputPassword: 'password',
 }
 
-const checkAuth = (auth, navigate) => {
-    if (auth.username && auth.username !== '') {
+const checkValidSession = (auth, navigate) => {
+    if (auth && auth !== '') {
         navigate('/profile');
     }
 }
@@ -21,15 +21,19 @@ const Login = () => {
         password: "",
         isPasswordVisible: false
     })
-
-    const { auth, signIn } = useGlobalContext()
-    checkAuth(auth, navigate)
+    
+    const { auth, signIn, checkAuth } = useGlobalContext()
+    checkValidSession(auth, navigate)
     useEffect(() => {
         setState({
             ...state,
         })
-        checkAuth(auth, navigate)
+   //     checkAuth(auth, navigate)
     }, [auth])
+
+    const validateSession = () => {
+        checkAuth(auth)
+    }
 
     const logIn = (event, data) => {
         event.preventDefault();
@@ -75,7 +79,7 @@ const Login = () => {
                         <i id='toggle-password' className={state.isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'} onClick={() => showPassword()}></i>
                     </div>
                     <div id='sigign-link-container' className="d-grid gap-2 d-md-flex justify-content-end">
-                        <a id='signin-registration-link'><i id='signin-registration-link-icon' className={'bi bi-person-plus-fill me-1 fs-5'} ></i><span>Don't have a user? Sign Up here!</span></a>
+                        <a id='signin-registration-link' onClick={validateSession}><i id='signin-registration-link-icon' className={'bi bi-person-plus-fill me-1 fs-5'} ></i><span>Don't have a user? Sign Up here!</span></a>
                     </div>
 
                     <br />

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react"
 import axios from 'axios'
+import jwt_decode from "jwt-decode";
 
 // NOTE: Add url to react env
 const BASE_URL = "http://localhost:3001";
@@ -29,24 +30,38 @@ export const GlobalProvider = ({ children }) => {
     // NOTE: Add to respective service files
 
     const checkAuth = async () => {
-        const response = await axios.get(`${BASE_URL}/auth/checkAuth`)
-        console.log(`Session is valid for user: ${userProfile.user}`, response.data)
-        setAuth(response.data)
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${BASE_URL}/auth/checkAuth`, {
+            headers: {
+                Authorization: `Bearer ${auth || token}`
+            }
+        }).catch(err => {
+            localStorage.removeItem('token')
+            setAuth('')
+        })
+        if (response) {
+            console.log('Token verified as valid!!')
+        }
     }
 
     // User Login & Registration
     const signIn = async (data = {}) => {
-        const response = await axios.post(`${BASE_URL}/user/signin`, { user: data.user, password: data.password }).catch(err=> {
+        const response = await axios.post(`${BASE_URL}/auth/signin`, { user: data.user, password: data.password }).catch(err => {
             console.error(`Error to Sign In for user: ${data.user}`, err)
             setAuth(err.response.data.data);
         })
+        console.log('Sign in response', response.data.data)
         if (response) {
-            console.log(`Sign in successful for user: ${data.user}`, response.data.data)
+            const decodedToken = jwt_decode(response.data.data)
+            console.log(`Sign in successful for user: ${data.user}`, decodedToken)
             setAuth(response.data.data)
+            localStorage.setItem('token', response.data.data)
+            const { username, firstname, lastname, email } = decodedToken
+            setUserProfile({ username, firstname, lastname, email, password: '1234' })
         }
     }
     const signUp = async (data = {}) => {
-        const response = await axios.post(`${BASE_URL}/user/signup`, { username: data.username, email: data.email, password: data.password })
+        const response = await axios.post(`${BASE_URL}/auth/signup`, { username: data.username, email: data.email, password: data.password })
         console.log(`Sign in successful for user: ${data.user}`, response.data.data)
     }
 
@@ -56,14 +71,20 @@ export const GlobalProvider = ({ children }) => {
 
     const updateUserPorfile = async (data = {}) => {
         console.log(`Updating ${userProfile.username} profile ...`);
-        const response = await axios.post(`${BASE_URL}/user/updateprofile`, { ...data }).catch(err => {
+        const response = await axios.post(`${BASE_URL}/user/updateprofile`, { ...data }, {
+            headers: {
+                Authorization: `Bearer ${auth}`
+            }
+        }).catch(err => {
             console.error(`There was an error updating profile for user ${userProfile.username}: `, err)
             return {
             }
         })
         console.log('User profile retrieved: ', response)
-        if (response.data.username) {
-            setUserProfile(response.data)
+        if (response.data) {
+            if (response.data.username) {
+                setUserProfile(response.data)
+            }
         }
     }
 
@@ -71,6 +92,8 @@ export const GlobalProvider = ({ children }) => {
     return (
         <GlobalContext.Provider value={{
             auth,
+            setAuth,
+            checkAuth,
             incomes,
             expenses,
             error,
