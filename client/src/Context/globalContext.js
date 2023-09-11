@@ -6,13 +6,15 @@ const BASE_URL = "http://localhost:3001";
 
 const GlobalContext = React.createContext()
 
-export const GlobalProvider = ({children}) => {
+export const GlobalProvider = ({ children }) => {
     const [auth, setAuth] = useState('')
     const [incomes, setIncomes] = useState([])
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
     const [dashboard, setDashboard] = useState(null)
-    const [userProfile, setUserProfile] = useState([])
+    const [userProfile, setUserProfile] = useState({
+        username: 'Landali', firstname: 'Allan', lastname: 'Paz', password: '1234', email: 'lan@gmail.com'
+    })
 
 
     // Mock Up Service
@@ -26,7 +28,7 @@ export const GlobalProvider = ({children}) => {
 
     // NOTE: Add to respective service files
 
-    const checkAuth = async () =>{
+    const checkAuth = async () => {
         const response = await axios.get(`${BASE_URL}/auth/checkAuth`)
         console.log(`Session is valid for user: ${userProfile.user}`, response.data)
         setAuth(response.data)
@@ -45,6 +47,20 @@ export const GlobalProvider = ({children}) => {
 
     // To add budget, dashboard and profile services.
 
+    // Profile Events
+
+    const updateUserPorfile = async (data = {}) => {
+        console.log(`Updating ${userProfile.username} profile ...`);
+        const response = await axios.post(`${BASE_URL}/user/updateprofile`, { ...data }).catch(err => {
+            console.error(`There was an error updating profile for user ${userProfile.username}: `, err)
+            return {
+            }
+        })
+        console.log('User profile retrieved: ', response)
+        if (response.data.username) {
+            setUserProfile(response.data)
+        }
+    }
 
 
     return (
@@ -55,7 +71,9 @@ export const GlobalProvider = ({children}) => {
             error,
             dashboard,
             setError,
-            dashBoardTable
+            dashBoardTable,
+            userProfile,
+            updateUserPorfile
         }}>
             {children}
         </GlobalContext.Provider>
@@ -63,6 +81,6 @@ export const GlobalProvider = ({children}) => {
 
 }
 
-export const useGlobalContext = () =>{
+export const useGlobalContext = () => {
     return useContext(GlobalContext)
 }
