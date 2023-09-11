@@ -2,7 +2,7 @@
     border-radius: .5rem;
 }
 
-.profile-logo{
+.profile-logo {
     padding: 1.15rem 1.5rem;
 }
 
@@ -29,11 +29,13 @@
 .img-account-profile {
     height: 10rem;
 }
+
 .rounded-circle {
     border-radius: 50% !important;
 }
 
-.form-control, .dataTable-input {
+.form-control,
+.dataTable-input {
     display: block;
     width: 100%;
     padding: 0.875rem 1.125rem;
@@ -67,6 +69,7 @@
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
 }
+
 #inputUsername:hover {
     font-size: 0.9rem;
     font-weight: bold;
@@ -78,6 +81,19 @@
     font-size: 0.78rem;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
+}
+
+#inputPassword {
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+
+#inputPassword:hover {
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    transition: all .2s ease-out;
 }
 
 #inputFirstName {
@@ -122,9 +138,10 @@
 
 /*Form buttons*/
 
-#profile-save-btn{
-    padding-left:  0.4rem;
+#profile-save-btn {
+    padding-left: 0.4rem;
 }
-#profile-clear-btn{
-    padding-left:  0.4rem;
+
+#profile-clear-btn {
+    padding-left: 0.4rem;
 }

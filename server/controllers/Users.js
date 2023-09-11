@@ -80,5 +80,14 @@ module.exports = {
             const validPassword = await Encrypt.comparePassword(user.password, userFound.dataValues.password)
             if (validPassword) return res.send('Login user')
         }
+    },
+    async updateProfile(req, res) {
+        console.log('Updating profile ....', req.body)
+        return res.status(200).json({
+            message: 'Profile Updated',
+            code: 200,
+            messageCode: 'ProfileUpt',
+            data: req.body.username
+        })
     }
 }
