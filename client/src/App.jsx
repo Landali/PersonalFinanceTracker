@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import Profile from "./Containers/Profile";
 import Registration from "./Containers/Registration";
 import Budget from "./Containers/Budget";
+import Incomes from "./Containers/Incomes";
 const router = createBrowserRouter([
   {
     path: '/',
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
   {
     path: '/budgets',
     element: <Budget/>,
+    errorElement: <Error />,
+  },
+  {
+    path: '/incomes/:id',
+    element: <Incomes/>,
     errorElement: <Error />,
   }
 ]);

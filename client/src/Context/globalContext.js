@@ -13,6 +13,9 @@ export const GlobalProvider = ({ children }) => {
     const [budgetsPages, setBudgetsPages] = useState(1)
 
     const [incomes, setIncomes] = useState([])
+    const [incomesPages, setIncomesPages] = useState(1)
+    
+
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
     const [dashboard, setDashboard] = useState(null)
@@ -181,6 +184,31 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    // Incomes Handlers
+
+    const getUserIncomes = async (pages, sort) => {
+        const token = localStorage.getItem('token');
+        console.log(`Retrieving Incomes for ${userProfile.username} ...`);
+        const response = await axios.get(`${BASE_URL}/budget/getIncomes`, {
+            params: { user: userProfile.username, pages, sort }, headers: {
+                Authorization: `Bearer ${auth || token}`
+            }
+        }
+
+        ).catch(err => {
+            console.error(`There was an error retrieving ${userProfile.username} incomes: `, err)
+            setIncomes([])
+        })
+
+        if (response) {
+            console.log('Budgets retrieved: ', response.data)
+            const nPages = response.data.pages < 4 ? 1 : Math.ceil(response.data.pages / 4)
+            setIncomes(response.data.data)
+            setIncomesPages(nPages)
+        }
+
+    }
+
     return (
         <GlobalContext.Provider value={{
             auth,
@@ -203,7 +231,10 @@ export const GlobalProvider = ({ children }) => {
             setBudgetsPages,
             createNewBudget,
             updateCurrentBudget,
-            deleteUserBudget
+            deleteUserBudget,
+            incomesPages,
+            setIncomesPages,
+            getUserIncomes
         }}>
             {children}
         </GlobalContext.Provider>
