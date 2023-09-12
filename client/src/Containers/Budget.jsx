@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
+import { useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../Context/globalContext';
 import BudgetCard from '../Components/BudgetCard'
 import Pagination from '../Components/Pagination'
@@ -60,9 +60,18 @@ const cardClassNames = {
     linksContainer: 'd-md-flex justify-content-md-end'
 }
 
+const checkValidSession = (auth, navigate) => {
+    if (!auth) {
+       navigate('/');
+    }
+}
+
 const Budget = () => {
+
     const [currentPage, setCurrentPage] = useState(1)
+    const navigate = useNavigate();
     const { auth, budgets, getUserBudgets, budgetsPages, deleteUserBudget } = useGlobalContext();
+    checkValidSession(auth, navigate);
     const deleteBudget = (id) => {
         console.log('Deleting budget: ', id)
         deleteUserBudget(id)
@@ -86,7 +95,7 @@ const Budget = () => {
                         <hr />
 
                     </div>
-                    <CreateBudgetModal />
+                    {auth ? <CreateBudgetModal /> : <div></div>}
 
                     <div className="row mb-3">
                         {
@@ -109,7 +118,7 @@ const Budget = () => {
                         }
 
                     </div>
-                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={budgetsPages} checkBudgetsPerPage={checkBudgetsPerPage}/>
+                   {auth ?  <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={budgetsPages} checkBudgetsPerPage={checkBudgetsPerPage}/> : <div></div>}
                 </div>
             </div>
         </div>
