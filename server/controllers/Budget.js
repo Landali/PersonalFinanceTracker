@@ -21,7 +21,7 @@ module.exports = {
         const query = {
             where: { user },
             order: [
-                ['createdAt', 'DESC']
+                ['createdAt', 'ASC']
             ]
         }
         if (pages) query.offset = parseInt(pages)
