@@ -90,12 +90,6 @@ const Profile = () => {
                         <i id='toggle-password' className={state.isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'} onClick={() => showPassword()}></i>
                     </div>
 
-                    <div className="row gx-3 mb-3">
-
-                        <div className="col me-3 fs-4">
-                        </div>
-
-                    </div>
 
                     <div className="row gx-3 mb-3">
 
