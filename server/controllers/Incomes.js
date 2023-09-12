@@ -163,5 +163,55 @@ module.exports = {
     },
     async deleteIncomes(req, res) {
         console.log('Deleting user incomes ...')
+        const { income, budget, user, total } = req.body
+        if (!income || !budget || !user || !total) {
+            return res.status(301).json({
+                message: 'Invalid Income Data',
+                code: 301,
+                messageCode: 'INVALIDINCOME',
+                data: []
+            })
+        }
+
+        const incomeQuery = {
+            where: { id: income, budget, user }
+        }
+        const deleteIncome = await Incomes.destroy(incomeQuery)
+
+        console.log('Deleted Income', deleteIncome)
+        if (deleteIncome) {
+            const query = {
+                where: { user, name: budget }
+            }
+            const incomeBudget = await Budgets.findOne(query)
+            if (incomeBudget) {
+                const newBalance = parseInt(incomeBudget.dataValues.balance) - parseInt(total)
+
+                const updateBudgetBalance = await Budgets.update({ balance: newBalance < 0 ? 0 : newBalance  },
+                    { where: { name: budget, user } })
+                if (updateBudgetBalance) {
+                    return res.status(200).json({
+                        message: 'Income successfully deleted',
+                        code: 200,
+                        messageCode: 'CreateIncome',
+                        data: []
+                    })
+                }
+            }
+            return res.status(301).json({
+                message: 'Budget balance not updated',
+                code: 301,
+                messageCode: 'NOTUPDATED',
+                data: []
+            })
+        } else {
+            return res.status(301).json({
+                message: 'Income not found',
+                code: 301,
+                messageCode: 'NotDeleteBudget',
+                data: []
+            })
+        }
+
     }
 }
