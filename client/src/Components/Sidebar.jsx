@@ -14,13 +14,13 @@ const Sidebar = ({ toggle }) => {
                     <hr></hr>
                     </li>
                     <li className='sidebar-item rounded'>
-                        <a id='sidebar-profile-item' href='#' className='sidebar-link'>
+                        <a id='sidebar-profile-item' href='/profile' className='sidebar-link'>
                             <i className="bi bi-house pe-2"></i>
                             <span>Profile</span>
                         </a>
                     </li>
                     <li className='sidebar-item rounded'>
-                        <a id='sidebar-dashboard-item' href='#' className='sidebar-link'>
+                        <a id='sidebar-dashboard-item' href='/dashboard' className='sidebar-link'>
                             <i className="bi bi-speedometer2 pe-2"></i>
                             <span>Dashboard</span>
                         </a>
@@ -32,13 +32,8 @@ const Sidebar = ({ toggle }) => {
                         </a>
                         <ul id='budgets' className='sidebar-dropdown list-unstyled collapse' data-bs-parent='#sidebar'>
                             <li id='sidebar-drop-item' className='sidebar-item rounded'>
-                                <a id='sidebar-income-item' href='#' className='sidebar-link'>
-                                    <span className='pe-2 fs-10'>Incomes</span>
-                                </a>
-                            </li>
-                            <li id='sidebar-drop-item' className='sidebar-item rounded'>
-                                <a id='sidebar-expense-item' href='#' className='sidebar-link'>
-                                    <span>Expenses</span>
+                                <a id='sidebar-budget-item' href='/budgets' className='sidebar-link'>
+                                    <span className='pe-2 fs-10'>Budgets</span>
                                 </a>
                             </li>
                         </ul>
