@@ -101,7 +101,7 @@ export const GlobalProvider = ({ children }) => {
 
     const getUserBudgets = async (pages, sort) => {
         const token = localStorage.getItem('token');
-        console.log(`Retrieving budgets for ${userProfile.username} ...`, auth);
+        console.log(`Retrieving budgets for ${userProfile.username} ...`);
         const response = await axios.get(`${BASE_URL}/budget/getBudgets`, {
             params: { user: userProfile.username, pages, sort }, headers: {
                 Authorization: `Bearer ${auth || token}`
@@ -163,6 +163,24 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    const deleteUserBudget = async (id) => {
+        console.log(`Deleting current budget for ${userProfile.username} ...`);
+        const token = localStorage.getItem('token');
+        const response = await axios.delete(`${BASE_URL}/budget/deleteBudget`, {
+            data: { budgetId: id }, headers: {
+                Authorization: `Bearer ${auth || token}`
+            }
+        }).catch(err => {
+            console.error(`There was an error deleting ${userProfile.username} budget: `, err)
+        })
+        if (response) {
+            console.log('Budget deleted!!', response.data)
+            if (response.data.code === 200) {
+                getUserBudgets()
+            }
+        }
+    }
+
     return (
         <GlobalContext.Provider value={{
             auth,
@@ -184,7 +202,8 @@ export const GlobalProvider = ({ children }) => {
             budgetsPages,
             setBudgetsPages,
             createNewBudget,
-            updateCurrentBudget
+            updateCurrentBudget,
+            deleteUserBudget
         }}>
             {children}
         </GlobalContext.Provider>

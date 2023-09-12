@@ -6,5 +6,5 @@ const { getBudgets, updateBudget, createBudget, deleteBudget } = require('../con
 router.get('/getBudgets', validateToken, getBudgets)
 router.put('/updateBudget', validateToken, updateBudget)
 router.post('/createBudget', validateToken, createBudget)
-router.delete("/deleteBudget", deleteBudget);
+router.delete("/deleteBudget", validateToken, deleteBudget);
 module.exports = router

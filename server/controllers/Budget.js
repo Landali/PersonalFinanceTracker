@@ -142,12 +142,36 @@ module.exports = {
         })
     },
     async deleteBudget(req, res) {
-        console.log('Deleting budget for user:', req.body.user)
-        return res.status(200).json({
-            message: 'Budgets Delete',
-            code: 200,
-            messageCode: 'DeleteBudget',
-            data: []
-        })
+        console.log('Deleting budget for user:', req.body)
+        const { budgetId } = req.body
+        if (!budgetId) {
+            return res.status(301).json({
+                message: 'Invalid budget id.',
+                code: 301,
+                messageCode: 'INVALIDBUDGET',
+                data: []
+            })
+        }
+        const query = {
+            where: { id: budgetId }
+        }
+        const deletedBudget = await Budgets.destroy(query)
+        console.log('Deleted budget', deletedBudget)
+        if (deletedBudget) {
+            return res.status(200).json({
+                message: 'Budgets Delete',
+                code: 200,
+                messageCode: 'DeleteBudget',
+                data: []
+            })
+        } else {
+            return res.status(301).json({
+                message: 'Budget was not deleted properly',
+                code: 301,
+                messageCode: 'NotDeleteBudget',
+                data: []
+            })
+        }
+
     }
 }

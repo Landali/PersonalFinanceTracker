@@ -62,9 +62,10 @@ const cardClassNames = {
 
 const Budget = () => {
     const [currentPage, setCurrentPage] = useState(1)
-    const { auth, budgets, getUserBudgets, budgetsPages } = useGlobalContext();
-    const deleteBudget = (name) => {
-        console.log('Deleting budget: ', name)
+    const { auth, budgets, getUserBudgets, budgetsPages, deleteUserBudget } = useGlobalContext();
+    const deleteBudget = (id) => {
+        console.log('Deleting budget: ', id)
+        deleteUserBudget(id)
     }
 
     useEffect(() => {

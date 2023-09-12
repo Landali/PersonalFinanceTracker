@@ -17,7 +17,7 @@ const BudgetCard = ({ cardClassNames = {}, header = '', title = '', text = '', l
                         {
                             links.map(el => {
                                 if (el.hasIcon) {
-                                    return (<a id={el.id} href={`${el.href}${budgetId}`} onClick={() => onDelete(header)} className={el.class}>
+                                    return (<a id={el.id} href={`#`} onClick={() => onDelete(budgetId)} className={el.class}>
                                         <i id={el.icon.id} className={el.icon.class}></i>
                                     </a>)
                                 } else {
