@@ -24,12 +24,15 @@ module.exports = {
                 ['createdAt', 'DESC']
             ]
         }
-        if (pages) query.offset = pages
-        if (sort) query.limit = sort
-
+        if (pages) query.offset = parseInt(pages)
+        if (sort) query.limit = parseInt(sort)
+        console.log('query', query)
         const { rows, count } = await Budgets.findAndCountAll(query)
         console.log('Budget data retrieved: ', count)
-        const my_budgets = rows.slice(0, 4);
+        let my_budgets = rows
+        if (!pages & !sort) {
+            my_budgets = rows.slice(0, 4);
+        }
         if (rows.length > 0) {
             return res.status(200).json({
                 message: 'Budgets retrieved',

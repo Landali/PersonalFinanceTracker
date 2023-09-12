@@ -13,7 +13,9 @@ const BudgetCard = ({ cardClassNames = {}, header = '', title = '', text = '', l
                 <div className={cardBody}>
                     <h5 className={cardTitle}>{title}</h5>
                     <p className={cardText}>{text}</p>
+                    <hr/>
                     <div className={linksContainer}>
+                      
                         {
                             links.map(el => {
                                 if (el.hasIcon) {

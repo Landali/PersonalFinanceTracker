@@ -72,6 +72,10 @@ const Budget = () => {
         getUserBudgets()
     }, [auth])
 
+    const checkBudgetsPerPage = (page, sort) => {
+        getUserBudgets(page, sort)
+    }
+
     return (
         <div className='col-md-11 mx-auto center-block' >
             <div className="p-3 bg-dark bg-gradient bg-opacity-75 shadow-sm d-flex justify-content-around align-items-center rounded">
@@ -105,7 +109,7 @@ const Budget = () => {
                         }
 
                     </div>
-                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={budgetsPages} />
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={budgetsPages} checkBudgetsPerPage={checkBudgetsPerPage}/>
                 </div>
             </div>
         </div>
