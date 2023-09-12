@@ -9,18 +9,26 @@ const inputKeys = {
     inputIncomeDate: 'date'
 }
 
-
-const CreateIncomeModal = ({ budget }) => {
+const UpdateIncomeModal = ({ budget, name, description, date, total, incomeId }) => {
 
     const [isOpen, setIsOpen] = useState(false);
+
+    const { auth, updateCurrentIncome } = useGlobalContext();
+
     const [state, setState] = useState({
         name: "",
         total: "",
         description: "",
         date: ""
     })
-
-    const { auth, createUserIncome } = useGlobalContext();
+    useEffect(() => {
+        setState({
+            name: name,
+            total: total,
+            description: description,
+            date: date
+        })
+    }, [auth])
 
     const toggleModal = (isOpen) => {
         setIsOpen(!isOpen)
@@ -35,28 +43,17 @@ const CreateIncomeModal = ({ budget }) => {
         })
     }
 
-    const clearIncomeChanges = () => {
-        setState({ name: '', total: '', description: '', date: '' })
-    }
-
-    const createIncome = (event, data) => {
+    const updateIncome = (event, data) => {
 
         console.log('Creating Income', data)
         event.preventDefault();
-        createUserIncome(data.name, data.total, data.description, data.date, budget)
-        setState({
-            name: "",
-            total: "",
-            description: "",
-            date: ""
-        })
+        updateCurrentIncome(data.name, data.total, data.description, data.date, budget, incomeId)
     }
 
     return (
         <div>
-            <button type="button" id='income-add-button' className="btn btn-circle" onClick={() => toggleModal(isOpen)} data-toggle="modal" data-target=".bd-example-modal-md">
-                <i className="bi bi-plus-square"></i>
-                <span id='income-modal-save-icon'>Add Income</span></button>
+            <i id='update-table-icon' className="bi bi-pencil-square" onClick={() => toggleModal(isOpen)} data-toggle="modal" data-target=".bd-example-modal-md"></i>
+
 
             <div className={isOpen ? `displayModal modal fade bd-example-modal-md show` : `hideModal modal fade bd-example-modal-md hide`} tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
@@ -65,12 +62,12 @@ const CreateIncomeModal = ({ budget }) => {
                         <div className="modal-header">
                             <div className='income-logo'>
                                 <i id='income-icon' className="bi bi-person-circle me-3 fs-6 "></i>
-                                <span id='income-title-tag' className="brand-name fs-6">Create Income</span>
+                                <span id='income-title-tag' className="brand-name fs-6">Update Income</span>
                             </div>
                             <button id='button-income-modal-close' type="button" className="btn btn-circle" data-mdb-dismiss="modal" onClick={() => toggleModal(isOpen)} aria-label="Close"><i className="bi bi-x-circle"></i></button>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={(e) => createIncome(e, state)}>
+                            <form onSubmit={(e) => updateIncome(e, state)}>
                                 <div className="col-10 mb-3">
                                     <div id='income-input-container' className="form-group">
                                         <label id='income-label' className="small mb-1" htmlFor="inputIncomeName">Income Name:</label>
@@ -100,11 +97,9 @@ const CreateIncomeModal = ({ budget }) => {
                         </div>
                         <div className="modal-footer">
                             <div id='income-buttons-container' className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button className="btn btn-outline-success overflow-auto" type="submit" onClick={(e) => createIncome(e, state)}>
+                                <button className="btn btn-outline-success overflow-auto" type="submit" onClick={(e) => updateIncome(e, state)}>
                                     <i className="bi bi-check2-circle"></i>
-                                    <span id='signup-save-btn'>Create</span></button>
-                                <button className="btn btn-outline-secondary overflow-auto" type="button" onClick={clearIncomeChanges} ><i className="bi bi-x-circle"></i><span id='signup-clear-btn'>Clear</span></button>
-
+                                    <span id='signup-save-btn'>Update</span></button>
                             </div>
                         </div>
                     </div>
@@ -114,4 +109,4 @@ const CreateIncomeModal = ({ budget }) => {
     )
 }
 
-export default CreateIncomeModal
+export default UpdateIncomeModal

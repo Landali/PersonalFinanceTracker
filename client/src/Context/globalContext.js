@@ -229,6 +229,26 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    const updateCurrentIncome = async (name, total, description, date, budget, incomeId) => {
+        console.log(`Updating current budget for ${userProfile.username} ...`);
+        const token = localStorage.getItem('token');
+        const response = await axios.put(`${BASE_URL}/income/updateIncomes`, { total, name, description, user: userProfile.username, budget, incomeId, date }, {
+            headers: {
+                Authorization: `Bearer ${auth || token}`
+            }
+        }).catch(err => {
+            console.error(`There was an error updating ${userProfile.username} Income: `, err)
+        })
+
+        if (response) {
+            console.log('Income updated retrieved: ', response.data)
+            if (response.data.code === 200) {
+                getUserIncomes(budget)
+            }
+
+        }
+    }
+
     return (
         <GlobalContext.Provider value={{
             auth,
@@ -255,7 +275,8 @@ export const GlobalProvider = ({ children }) => {
             incomesPages,
             setIncomesPages,
             getUserIncomes,
-            createUserIncome
+            createUserIncome,
+            updateCurrentIncome
         }}>
             {children}
         </GlobalContext.Provider>

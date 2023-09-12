@@ -4,6 +4,7 @@ import Table from '../Components/Table';
 import Pagination from '../Components/Pagination';
 import { useGlobalContext } from '../Context/globalContext';
 import CreateIncomeModal from '../Components/CreateIncomeModal';
+import UpdateIncomeModal from '../Components/UpdateIncomeModal';
 
 const tableHeaders = [
     {
@@ -60,6 +61,7 @@ const Incomes = () => {
     const [currentBudget, setCurrentBudget] = useState('')
     const { auth, incomes, incomesPages, getUserIncomes } = useGlobalContext();
 
+    console.log('check budget', getBudget(window.location.pathname))
     useEffect(() => {
         getUserIncomes(getBudget(window.location.pathname))
         setCurrentBudget(getBudget(window.location.pathname))
@@ -86,12 +88,15 @@ const Incomes = () => {
                         <span id='profile-title-tag' className="brand-name fs-4">My Incomes</span>
                         <hr />
                     </div>
-              <CreateIncomeModal budget={currentBudget}></CreateIncomeModal>
+                    <CreateIncomeModal budget={currentBudget} />
+
                     <Table
                         headers={tableHeaders}
                         body={incomes}
                         handleUpdate={updateIncome}
                         handleDelete={deleteIncome}
+                        updateForm={UpdateIncomeModal}
+                        budget={currentBudget}
                     />
                     <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={incomesPages} checkBudgetsPerPage={checkIncomesPerPage} />
                 </div>
