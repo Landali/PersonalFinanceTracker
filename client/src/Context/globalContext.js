@@ -114,8 +114,47 @@ export const GlobalProvider = ({ children }) => {
             setBudgets(response.data.data)
             setBudgetsPages(nPages)
         }
+
     }
 
+    const createNewBudget = async (name, balance, description) => {
+        console.log(`Creating budget for ${userProfile.username} ...`);
+        const response = await axios.post(`${BASE_URL}/budget/createBudget`, { name, balance, description, user: userProfile.username }, {
+            headers: {
+                Authorization: `Bearer ${auth}`
+            }
+        }).catch(err => {
+            console.error(`There was an error creating ${userProfile.username} budget: `, err)
+            
+        })
+
+        if (response) {
+            console.log('Budgets retrieved: ', response.data)
+            if (response.data.code === 200) {
+                getUserBudgets()
+            }
+
+        }
+    }
+
+    const updateCurrentBudget = async (name, balance, description, id) => {
+        console.log(`Updating current budget for ${userProfile.username} ...`);
+        const response = await axios.put(`${BASE_URL}/budget/updateBudget`, { name, balance, description, user: userProfile.username, budgetId: id }, {
+            headers: {
+                Authorization: `Bearer ${auth}`
+            }
+        }).catch(err => {
+            console.error(`There was an error updating ${userProfile.username} budget: `, err)
+        })
+
+        if (response) {
+            console.log('Budgets updated retrieved: ', response.data)
+            if (response.data.code === 200) {
+                getUserBudgets()
+            }
+
+        }
+    }
 
     return (
         <GlobalContext.Provider value={{
@@ -136,7 +175,9 @@ export const GlobalProvider = ({ children }) => {
             setBudgets,
             getUserBudgets,
             budgetsPages,
-            setBudgetsPages
+            setBudgetsPages,
+            createNewBudget,
+            updateCurrentBudget
         }}>
             {children}
         </GlobalContext.Provider>

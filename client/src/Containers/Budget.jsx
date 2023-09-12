@@ -4,6 +4,8 @@ import { useGlobalContext } from '../Context/globalContext';
 import BudgetCard from '../Components/BudgetCard'
 import Pagination from '../Components/Pagination'
 import '../Styles/budget.css'
+import CreateBudgetModal from '../Components/CreateBudgetModal';
+import UpdateBudgetModal from '../Components/UpdatebudgetModal';
 
 const cardsLinks = [
     {
@@ -60,7 +62,7 @@ const cardClassNames = {
 
 const Budget = () => {
     const [currentPage, setCurrentPage] = useState(1)
-    const { auth, budgets, getUserBudgets,  budgetsPages } = useGlobalContext();
+    const { auth, budgets, getUserBudgets, budgetsPages } = useGlobalContext();
     const deleteBudget = (name) => {
         console.log('Deleting budget: ', name)
     }
@@ -76,8 +78,12 @@ const Budget = () => {
                     <div className='budget-list-logo'>
                         <i id='budget-title-icon' className="bi bi-wallet-fill me-3 fs-5"></i>
                         <span id='budget-title-tag' className="brand-name fs-4">My Budgets</span>
+                        <hr />
+
                     </div>
-                    <div class="row mb-3">
+                    <CreateBudgetModal />
+
+                    <div className="row mb-3">
                         {
                             budgets.map(el => (<BudgetCard
                                 cardClassNames={cardClassNames}
@@ -87,12 +93,17 @@ const Budget = () => {
                                 text={el.description}
                                 cardId={cardIds}
                                 links={cardsLinks}
+                                budgetId={el.id}
                                 onDelete={deleteBudget}
+                                updateCards={<UpdateBudgetModal 
+                                    name={el.name} 
+                                    balance={el.balance} 
+                                    description={el.description} 
+                                    id={el.id} />}
                             />))
                         }
 
                     </div>
-
                     <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={budgetsPages} />
                 </div>
             </div>
