@@ -5,28 +5,6 @@ const Encrypt = require('../helpers/bycript');
 module.exports = {
     async getBudgets(req, res) {
         console.log('Retrieving all budgets for user:', req.query)
-        const MockData = [
-            {
-                name: 'Mock Budget 1',
-                balance: 100,
-                description: 'Mock Budget 1 Description. Here should be a brief description of the budget.',
-            },
-            {
-                name: 'Mock Budget 2',
-                balance: 200,
-                description: 'Mock Budget 2 Description. Here should be a brief description of the budget.',
-            },
-            {
-                name: 'Mock Budget 3',
-                balance: 300,
-                description: 'Mock Budget 3 Description. Here should be a brief description of the budget.',
-            },
-            {
-                name: 'Mock Budget 4',
-                balance: 400,
-                description: 'Mock Budget 4 Description. Here should be a brief description of the budget.',
-            }
-        ]
 
         const { user, pages, sort } = req.query
 
@@ -50,14 +28,25 @@ module.exports = {
         if (sort) query.limit = sort
 
         const { rows, count } = await Budgets.findAndCountAll(query)
-        console.log('Budget data retrieved: ', rows, count)
-        return res.status(200).json({
-            message: 'Budgets retrieved',
-            code: 200,
-            messageCode: 'GetBudgets',
-            data: MockData,
-            pages: 10,
-        })
+        console.log('Budget data retrieved: ', count)
+        const my_budgets = rows.slice(0, 4);
+        if (rows.length > 0) {
+            return res.status(200).json({
+                message: 'Budgets retrieved',
+                code: 200,
+                messageCode: 'GetBudgets',
+                data: my_budgets,
+                pages: count === 0 ? 4 : count,
+            })
+        } else {
+            return res.status(200).json({
+                message: 'No budgets found',
+                code: 200,
+                messageCode: 'GetBudgets',
+                data: [],
+                pages: 4,
+            })
+        }
     },
     async updateBudget(req, res) {
         console.log('Updating budget for user:', req.body.user)
@@ -84,7 +73,7 @@ module.exports = {
             where: { user, name }
         }
         const checkBudget = await Budgets.findOne(query)
-    
+
         if (checkBudget) {
             console.warn('Budget found with that name', name, checkBudget.dataValues)
             return res.status(301).json({
