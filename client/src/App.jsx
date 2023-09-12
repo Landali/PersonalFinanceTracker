@@ -11,6 +11,7 @@ import Nav from './Components/Nav';
 import { useState, useEffect } from "react";
 import Profile from "./Containers/Profile";
 import Registration from "./Containers/Registration";
+import Budget from "./Containers/Budget";
 const router = createBrowserRouter([
   {
     path: '/',
@@ -35,6 +36,11 @@ const router = createBrowserRouter([
   {
     path: '/registration',
     element: <Registration/>,
+    errorElement: <Error />,
+  },
+  {
+    path: '/budgets',
+    element: <Budget/>,
     errorElement: <Error />,
   }
 ]);
