@@ -51,6 +51,62 @@ module.exports = {
     },
     async updateIncomes(req, res) {
         console.log('Updating user incomes ...')
+        const { user, name, description, total, budget, date, incomeId } = req.body
+        if (!user || !total || !description || !name || !budget || !date || !incomeId) {
+            return res.status(301).json({
+                message: 'Invalid income data.',
+                code: 301,
+                messageCode: 'INVALIDINCOME',
+                data: []
+            })
+        }
+        const updatedIncome = await Incomes.update(
+            { user, name, description, total, date, budget },
+            { where: { id: incomeId } }
+        ).catch(err => {
+            console.error('Updating error', {
+                type: err.type,
+                message: err.message
+            })
+            return res.status(401).json({
+                message: 'Error updating income',
+                code: 401,
+                messageCode: 'ErrUpdateBudget',
+                data: []
+            })
+        })
+        if (updatedIncome) {
+            console.log('Income updated', updatedIncome)
+            const query = {
+                where: { user, name: budget }
+            }
+            const incomeBudget = await Budgets.findOne(query)
+            if (incomeBudget) {
+                const updateBudgetBalance = await Budgets.update({ balance: parseInt(incomeBudget.dataValues.balance) + parseInt(total) },
+                    { where: { name: budget, user } })
+                if (updateBudgetBalance) {
+                    return res.status(200).json({
+                        message: 'Income successfully updated',
+                        code: 200,
+                        messageCode: 'CreateIncome',
+                        data: []
+                    })
+                }
+            }
+            return res.status(301).json({
+                message: 'Budget balance not updated',
+                code: 301,
+                messageCode: 'NOTUPDATED',
+                data: []
+            })
+        }
+
+        return res.status(301).json({
+            message: 'Budget was not created',
+            code: 301,
+            messageCode: 'CreateBudget',
+            data: []
+        })
     },
     async createIncomes(req, res) {
         console.log('Creating user incomes ...', req.body)
@@ -76,18 +132,18 @@ module.exports = {
                 where: { user, name: budget }
             }
             const incomeBudget = await Budgets.findOne(query)
-
+            console.log('Income budget', incomeBudget)
             if (incomeBudget) {
                 const updateBudgetBalance = await Budgets.update({ balance: parseInt(incomeBudget.dataValues.balance) + parseInt(total) },
                     { where: { name: budget, user } })
-                    if (updateBudgetBalance) {
-                        return res.status(200).json({
-                            message: 'Income successfully created',
-                            code: 200,
-                            messageCode: 'CreateIncome',
-                            data: []
-                        })
-                    }
+                if (updateBudgetBalance) {
+                    return res.status(200).json({
+                        message: 'Income successfully created',
+                        code: 200,
+                        messageCode: 'CreateIncome',
+                        data: []
+                    })
+                }
             }
             return res.status(301).json({
                 message: 'Budget balance not updated',
