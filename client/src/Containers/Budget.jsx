@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+import { useGlobalContext } from '../Context/globalContext';
 import BudgetCard from '../Components/BudgetCard'
 import Pagination from '../Components/Pagination'
 import '../Styles/budget.css'
@@ -57,35 +58,16 @@ const cardClassNames = {
     linksContainer: 'd-md-flex justify-content-md-end'
 }
 
-const MockData = [
-    {
-        name: 'Mock Budget 1',
-        balance: 100,
-        description: 'Mock Budget 1 Description. Here should be a brief description of the budget.',
-    },
-    {
-        name: 'Mock Budget 2',
-        balance: 200,
-        description: 'Mock Budget 2 Description. Here should be a brief description of the budget.',
-    },
-    {
-        name: 'Mock Budget 3',
-        balance: 300,
-        description: 'Mock Budget 3 Description. Here should be a brief description of the budget.',
-    },
-    {
-        name: 'Mock Budget 4',
-        balance: 400,
-        description: 'Mock Budget 4 Description. Here should be a brief description of the budget.',
-    }
-]
-
 const Budget = () => {
     const [currentPage, setCurrentPage] = useState(1)
-
+    const { auth, budgets, getUserBudgets } = useGlobalContext();
     const deleteBudget = (name) => {
         console.log('Deleting budget: ', name)
     }
+
+    useEffect(() => {
+        getUserBudgets()
+    }, [auth])
 
     return (
         <div className='col-md-11 mx-auto center-block' >
@@ -97,7 +79,7 @@ const Budget = () => {
                     </div>
                     <div class="row mb-3">
                         {
-                            MockData.map(el => (<BudgetCard
+                            budgets.map(el => (<BudgetCard
                                 cardClassNames={cardClassNames}
                                 cardIds={cardIds}
                                 header={el.name}
@@ -108,7 +90,7 @@ const Budget = () => {
                                 onDelete={deleteBudget}
                             />))
                         }
-         
+
                     </div>
 
                     <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={5} />

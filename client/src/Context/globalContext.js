@@ -3,12 +3,13 @@ import axios from 'axios'
 import jwt_decode from "jwt-decode";
 
 // NOTE: Add url to react env
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3001";
 
 const GlobalContext = React.createContext()
 
 export const GlobalProvider = ({ children }) => {
     const [auth, setAuth] = useState('')
+    const [budgets, setBudgets] = useState([])
     const [incomes, setIncomes] = useState([])
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
@@ -92,6 +93,25 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    // Handler Budget Events
+
+    const getUserBudgets = async () => {
+        console.log(`Retrieving budgets for ${userProfile.username} ...`);
+        const response = await axios.get(`${BASE_URL}/budget/getBudgets`, { params: { user: userProfile.username } }, {
+            headers: {
+                Authorization: `Bearer ${auth}`
+            }
+        }).catch(err => {
+            console.error(`There was an error retrieving ${userProfile.username} budgets: `, err)
+            setBudgets([])
+        })
+     
+        if (response) {
+            console.log('Budgets retrieved: ', response.data.data)
+            setBudgets(response.data.data)
+        }
+    }
+
 
     return (
         <GlobalContext.Provider value={{
@@ -107,7 +127,10 @@ export const GlobalProvider = ({ children }) => {
             userProfile,
             updateUserPorfile,
             signIn,
-            signUp
+            signUp,
+            budgets,
+            setBudgets,
+            getUserBudgets
         }}>
             {children}
         </GlobalContext.Provider>
