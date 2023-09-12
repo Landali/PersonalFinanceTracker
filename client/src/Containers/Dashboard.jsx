@@ -7,7 +7,6 @@ const Dashboard = () => {
 
   const { dashboard, dashBoardTable, auth } = useGlobalContext()
   useEffect(() => {
-    dashBoardTable()
   }, [])
   // if (!auth) {
   //     return <h1>Denied</h1>
