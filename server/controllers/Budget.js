@@ -49,13 +49,49 @@ module.exports = {
         }
     },
     async updateBudget(req, res) {
-        console.log('Updating budget for user:', req.body.user)
-        return res.status(200).json({
-            message: 'Budgets Updated',
-            code: 200,
-            messageCode: 'UpdateBudget',
-            data: []
+        console.log('Updating budget for user:', req.body)
+        const { user, name, description, balance, budgetId } = req.body
+        if (!user || !name || !description || !balance || !budgetId) {
+            return res.status(301).json({
+                message: 'Invalid budget data.',
+                code: 301,
+                messageCode: 'INVALIDBUDGET',
+                data: []
+            })
+        }
+
+        const updatedBudget = await Budgets.update(
+            { user, name, description, balance },
+            { where: { id: budgetId } }
+        ).catch(err => {
+            console.error('Updating error', {
+                type: err.type,
+                message: err.message
+            })
+            return res.status(401).json({
+                message: 'Error updating budget',
+                code: 401,
+                messageCode: 'ErrUpdateBudget',
+                data: []
+            })
         })
+
+        if (updatedBudget) {
+            console.log('Budget updated ..', updatedBudget)
+            return res.status(200).json({
+                message: 'Budgets Updated',
+                code: 200,
+                messageCode: 'UpdateBudget',
+                data: []
+            })
+        } else {
+            return res.status(301).json({
+                message: 'Budget was not updating correctly',
+                code: 301,
+                messageCode: 'NotUpdateBudget',
+                data: []
+            })
+        }
     },
     async createBudget(req, res) {
         console.log('Creating budget for user:', req.body)
