@@ -33,10 +33,12 @@ export const GlobalProvider = ({ children }) => {
     // NOTE: Add to respective service files
 
     const checkAuth = async () => {
+
         const token = localStorage.getItem('token');
+        console.log('auth check ', token)
         const response = await axios.get(`${BASE_URL}/auth/checkAuth`, {
             headers: {
-                Authorization: `Bearer ${auth || token}`
+                Authorization: `Bearer ${token}`
             }
         }).catch(err => {
             localStorage.removeItem('token')
@@ -98,12 +100,15 @@ export const GlobalProvider = ({ children }) => {
     // Handler Budget Events
 
     const getUserBudgets = async (pages, sort) => {
-        console.log(`Retrieving budgets for ${userProfile.username} ...`);
-        const response = await axios.get(`${BASE_URL}/budget/getBudgets`, { params: { user: userProfile.username, pages, sort } }, {
-            headers: {
-                Authorization: `Bearer ${auth}`
+        const token = localStorage.getItem('token');
+        console.log(`Retrieving budgets for ${userProfile.username} ...`, auth);
+        const response = await axios.get(`${BASE_URL}/budget/getBudgets`, {
+            params: { user: userProfile.username, pages, sort }, headers: {
+                Authorization: `Bearer ${auth || token}`
             }
-        }).catch(err => {
+        }
+
+        ).catch(err => {
             console.error(`There was an error retrieving ${userProfile.username} budgets: `, err)
             setBudgets([])
         })
@@ -119,13 +124,14 @@ export const GlobalProvider = ({ children }) => {
 
     const createNewBudget = async (name, balance, description) => {
         console.log(`Creating budget for ${userProfile.username} ...`);
+        const token = localStorage.getItem('token');
         const response = await axios.post(`${BASE_URL}/budget/createBudget`, { name, balance, description, user: userProfile.username }, {
             headers: {
-                Authorization: `Bearer ${auth}`
+                Authorization: `Bearer ${auth || token}`
             }
         }).catch(err => {
             console.error(`There was an error creating ${userProfile.username} budget: `, err)
-            
+
         })
 
         if (response) {
@@ -139,9 +145,10 @@ export const GlobalProvider = ({ children }) => {
 
     const updateCurrentBudget = async (name, balance, description, id) => {
         console.log(`Updating current budget for ${userProfile.username} ...`);
+        const token = localStorage.getItem('token');
         const response = await axios.put(`${BASE_URL}/budget/updateBudget`, { name, balance, description, user: userProfile.username, budgetId: id }, {
             headers: {
-                Authorization: `Bearer ${auth}`
+                Authorization: `Bearer ${auth || token}`
             }
         }).catch(err => {
             console.error(`There was an error updating ${userProfile.username} budget: `, err)
