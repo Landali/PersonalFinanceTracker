@@ -56,6 +56,10 @@ const Login = () => {
         })
     }
 
+    const sendToSignUp = () => {
+        navigate('registration')
+    }
+
     return (
         <div className='col-md-5 mx-auto center-block' >
             <div className="p-3 bg-dark bg-gradient bg-opacity-75 shadow-sm d-flex justify-content-around align-items-center rounded">
@@ -79,7 +83,7 @@ const Login = () => {
                         <i id='toggle-password' className={state.isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'} onClick={() => showPassword()}></i>
                     </div>
                     <div id='sigign-link-container' className="d-grid gap-2 d-md-flex justify-content-end">
-                        <a id='signin-registration-link' onClick={validateSession}><i id='signin-registration-link-icon' className={'bi bi-person-plus-fill me-1 fs-5'} ></i><span>Don't have a user? Sign Up here!</span></a>
+                        <a id='signin-registration-link' onClick={sendToSignUp}><i id='signin-registration-link-icon' className={'bi bi-person-plus-fill me-1 fs-5'} ></i><span>Don't have a user? Sign Up here!</span></a>
                     </div>
 
                     <br />
