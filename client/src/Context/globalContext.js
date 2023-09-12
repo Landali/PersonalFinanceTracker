@@ -14,7 +14,7 @@ export const GlobalProvider = ({ children }) => {
 
     const [incomes, setIncomes] = useState([])
     const [incomesPages, setIncomesPages] = useState(1)
-    
+
 
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
@@ -186,11 +186,11 @@ export const GlobalProvider = ({ children }) => {
 
     // Incomes Handlers
 
-    const getUserIncomes = async (pages, sort) => {
+    const getUserIncomes = async (budget, pages, sort) => {
         const token = localStorage.getItem('token');
         console.log(`Retrieving Incomes for ${userProfile.username} ...`);
-        const response = await axios.get(`${BASE_URL}/budget/getIncomes`, {
-            params: { user: userProfile.username, pages, sort }, headers: {
+        const response = await axios.get(`${BASE_URL}/income/getIncomes`, {
+            params: { user: userProfile.username, budget, pages, sort }, headers: {
                 Authorization: `Bearer ${auth || token}`
             }
         }
@@ -207,6 +207,26 @@ export const GlobalProvider = ({ children }) => {
             setIncomesPages(nPages)
         }
 
+    }
+
+    const createUserIncome = async (name, total, description, date, budget) => {
+        console.log(`Creating budget for ${userProfile.username} ...`);
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${BASE_URL}/income/createIncomes`, { date, budget, name, total, description, user: userProfile.username }, {
+            headers: {
+                Authorization: `Bearer ${auth || token}`
+            }
+        }).catch(err => {
+            console.error(`There was an error creating ${userProfile.username} budget: `, err)
+
+        })
+
+        if (response) {
+            console.log('Budgets retrieved: ', response.data)
+            if (response.data.code === 200) {
+                getUserIncomes()
+            }
+        }
     }
 
     return (
@@ -234,7 +254,8 @@ export const GlobalProvider = ({ children }) => {
             deleteUserBudget,
             incomesPages,
             setIncomesPages,
-            getUserIncomes
+            getUserIncomes,
+            createUserIncome
         }}>
             {children}
         </GlobalContext.Provider>

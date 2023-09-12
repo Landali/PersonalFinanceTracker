@@ -22,8 +22,8 @@ const Table = ({ headers, body, handleUpdate, handleDelete }) => {
                             <td>{el.description}</td>
                             <td>{el.total}</td>
                             <td>{el.date}</td>
-                            <td><i className="bi bi-pencil-square" onClick={() => handleUpdate(el)}></i></td>
-                            <td><i className="bi bi-trash3" onClick={()=>handleDelete(el)}></i></td>
+                            <td><i id='update-table-icon' className="bi bi-pencil-square" onClick={() => handleUpdate(el)}></i></td>
+                            <td><i id='delete-table-icon' className="bi bi-trash3" onClick={()=>handleDelete(el)}></i></td>
                         </tr>
                     )
                 })}
