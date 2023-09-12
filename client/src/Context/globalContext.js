@@ -10,6 +10,8 @@ const GlobalContext = React.createContext()
 export const GlobalProvider = ({ children }) => {
     const [auth, setAuth] = useState('')
     const [budgets, setBudgets] = useState([])
+    const [budgetsPages, setBudgetsPages] = useState(1)
+
     const [incomes, setIncomes] = useState([])
     const [expenses, setExpenses] = useState([])
     const [error, setError] = useState(null)
@@ -95,9 +97,9 @@ export const GlobalProvider = ({ children }) => {
 
     // Handler Budget Events
 
-    const getUserBudgets = async () => {
+    const getUserBudgets = async (pages, sort) => {
         console.log(`Retrieving budgets for ${userProfile.username} ...`);
-        const response = await axios.get(`${BASE_URL}/budget/getBudgets`, { params: { user: userProfile.username } }, {
+        const response = await axios.get(`${BASE_URL}/budget/getBudgets`, { params: { user: userProfile.username, pages, sort } }, {
             headers: {
                 Authorization: `Bearer ${auth}`
             }
@@ -105,10 +107,12 @@ export const GlobalProvider = ({ children }) => {
             console.error(`There was an error retrieving ${userProfile.username} budgets: `, err)
             setBudgets([])
         })
-     
+
         if (response) {
-            console.log('Budgets retrieved: ', response.data.data)
+            console.log('Budgets retrieved: ', response.data)
+            const nPages = response.data.pages < 4 ? 1 : Math.ceil(response.data.pages / 4)
             setBudgets(response.data.data)
+            setBudgetsPages(nPages)
         }
     }
 
@@ -130,7 +134,9 @@ export const GlobalProvider = ({ children }) => {
             signUp,
             budgets,
             setBudgets,
-            getUserBudgets
+            getUserBudgets,
+            budgetsPages,
+            setBudgetsPages
         }}>
             {children}
         </GlobalContext.Provider>

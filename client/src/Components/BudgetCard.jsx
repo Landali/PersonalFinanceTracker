@@ -14,7 +14,6 @@ const BudgetCard = ({ cardClassNames = {}, header = '', title = '', text = '', l
                     <div className={linksContainer}>
                         {
                             links.map(el => {
-                                console.log('Has Icon? ', el.hasIcon, el.icon)
                                 if (el.hasIcon) {
                                     return (<a id={el.id} href={el.href} onClick={() => onDelete(header)} className={el.class}>
                                         <i id={el.icon.id} className={el.icon.class}></i>

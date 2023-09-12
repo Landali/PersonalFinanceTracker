@@ -11,6 +11,7 @@ const Pagination = ({ nPages = 5, currentPage = 1, setCurrentPage }) => {
         if (currentPage !== nPages) setCurrentPage(currentPage + 1)
     }
     const prevPage = () => {
+        console.log('Previous page')
         if (currentPage !== 1) setCurrentPage(currentPage - 1)
     }
 

@@ -29,7 +29,7 @@ module.exports = {
         ]
 
         const { user, pages, sort } = req.query
-        
+
         if (!user) {
             return res.status(404).json({
                 message: 'No user sent',
@@ -69,9 +69,48 @@ module.exports = {
         })
     },
     async createBudget(req, res) {
-        console.log('Creating budget for user:', req.body.user)
-        return res.status(200).json({
-            message: 'Budgets Created',
+        console.log('Creating budget for user:', req.body)
+
+        const { user, name, description, balance } = req.body
+        if (!user || !name || !description || !balance) {
+            return res.status(301).json({
+                message: 'Invalid budget data.',
+                code: 301,
+                messageCode: 'INVALIDBUDGET',
+                data: []
+            })
+        }
+        const query = {
+            where: { user, name }
+        }
+        const checkBudget = await Budgets.findOne(query)
+    
+        if (checkBudget) {
+            console.warn('Budget found with that name', name, checkBudget.dataValues)
+            return res.status(301).json({
+                message: 'Budget with same name found',
+                code: 301,
+                messageCode: 'DUPLICATEBUDGET',
+                data: []
+            })
+        } else {
+            const { dataValues: newBudget } = await Budgets.create({
+                user, name, description, balance
+            })
+
+            if (newBudget) {
+                console.log('New Budget created', newBudget)
+                return res.status(200).json({
+                    message: 'Budgets Created',
+                    code: 200,
+                    messageCode: 'CreateBudget',
+                    data: []
+                })
+            }
+        }
+
+        return res.status(301).json({
+            message: 'Budget was not created',
             code: 200,
             messageCode: 'CreateBudget',
             data: []

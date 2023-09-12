@@ -60,7 +60,7 @@ const cardClassNames = {
 
 const Budget = () => {
     const [currentPage, setCurrentPage] = useState(1)
-    const { auth, budgets, getUserBudgets } = useGlobalContext();
+    const { auth, budgets, getUserBudgets,  budgetsPages } = useGlobalContext();
     const deleteBudget = (name) => {
         console.log('Deleting budget: ', name)
     }
@@ -93,7 +93,7 @@ const Budget = () => {
 
                     </div>
 
-                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={5} />
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={budgetsPages} />
                 </div>
             </div>
         </div>
