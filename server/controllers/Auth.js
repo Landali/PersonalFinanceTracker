@@ -7,22 +7,15 @@ const Encrypt = require('../helpers/bycript');
 
 module.exports = {
     async signUp(req, res) {
-        console.log('Signing up user ...')
+        console.log('Signing up user ...', req.body)
         const user = req.body
-
+        const { username, email, password, firstname, lastname } = user
         // NOTE: create handler to verify request body
-        if (!user.username && !user.email) {
+        if (!username || !email || !password || !firstname || !lastname ) {
             return res.status(401).json({
-                message: 'Error creating user.',
+                message: 'Invalid user data. Please send all your profile',
                 code: 401,
-                messageCode: 'userErr',
-            })
-        }
-        if (!user.password) {
-            return res.status(401).json({
-                message: 'Error creating user.',
-                code: 401,
-                messageCode: 'pwdErr',
+                messageCode: 'InvalidProfile',
             })
         }
 
@@ -50,11 +43,20 @@ module.exports = {
             const hashedPassword = await Encrypt.cryptPassword(user.password, 10)
             user.password = hashedPassword
             const newUser = await Users.create(user)
-
-            return res.status(200).json({
-                message: 'User created',
-                code: 200,
-                messageCode: 'userCreated',
+            console.log('New user created: ', newUser)
+            if (newUser) {
+                if (dataValues.dataValues.username) {
+                    return res.status(200).json({
+                        message: 'User created',
+                        code: 200,
+                        messageCode: 'userCreated',
+                    })
+                }
+            }
+            return res.status(301).json({
+                message: 'Error to create user',
+                code: 301,
+                messageCode: 'userCreatErr',
             })
         }
 

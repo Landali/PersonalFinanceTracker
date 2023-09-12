@@ -118,7 +118,7 @@ const Profile = () => {
                     <br />
                     <br />
                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button className="btn btn-outline-success overflow-auto" type="submit" onSubmit={updateUserPorfile}
+                        <button className="btn btn-outline-success overflow-auto" type="submit"
                         >
                             <i className="bi bi-check2-circle"></i>
                             <span id='profile-save-btn'>Save</span></button>
