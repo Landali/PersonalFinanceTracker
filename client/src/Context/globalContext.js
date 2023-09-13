@@ -379,9 +379,9 @@ export const GlobalProvider = ({ children }) => {
         }
     
         const deleteUserExpense = async (expense, budget, total) => {
-            console.log(`Deleting current Income for ${userProfile.username} ...`);
+            console.log(`Deleting current Income for ${userProfile.username} ...`, expense, budget, total);
             const token = localStorage.getItem('token');
-            const response = await axios.delete(`${BASE_URL}/income/deleteIncomes`, {
+            const response = await axios.delete(`${BASE_URL}/expense/deleteExpenses`, {
                 data: { expense, budget, user: userProfile.username, total }, headers: {
                     Authorization: `Bearer ${auth || token}`
                 }
