@@ -50,9 +50,9 @@ module.exports = {
         }
     },
     async updateExpenses(req, res) {
-        console.log('Updating user expenses ...')
-        const { user, name, description, total, budget, date, incomeId } = req.body
-        if (!user || !total || !description || !name || !budget || !date || !incomeId) {
+        console.log('Updating user expenses ...', req.body)
+        const { user, name, description, total, budget, date, expenseId } = req.body
+        if (!user || !total || !description || !name || !budget || !date || !expenseId) {
             return res.status(301).json({
                 message: 'Invalid expense data.',
                 code: 301,
@@ -60,9 +60,9 @@ module.exports = {
                 data: []
             })
         }
-        const updatedIncome = await Expenses.update(
+        const updatedExpense = await Expenses.update(
             { user, name, description, total, date, budget },
-            { where: { id: incomeId } }
+            { where: { id: expenseId } }
         ).catch(err => {
             console.error('Updating error', {
                 type: err.type,
@@ -75,20 +75,20 @@ module.exports = {
                 data: []
             })
         })
-        if (updatedIncome) {
-            console.log('Expense updated', updatedIncome)
+        if (updatedExpense) {
+            console.log('Expense updated', updatedExpense)
             const query = {
                 where: { user, name: budget }
             }
-            const incomeBudget = await Budgets.findOne(query)
-            if (incomeBudget) {
-                const updateBudgetBalance = await Budgets.update({ balance: parseInt(incomeBudget.dataValues.balance) + parseInt(total) },
+            const expenseBudget = await Budgets.findOne(query)
+            if (expenseBudget) {
+                const updateBudgetBalance = await Budgets.update({ balance: parseInt(expenseBudget.dataValues.balance) + parseInt(total) },
                     { where: { name: budget, user } })
                 if (updateBudgetBalance) {
                     return res.status(200).json({
                         message: 'Expense successfully updated',
                         code: 200,
-                        messageCode: 'CreateIncome',
+                        messageCode: 'CreateExpense',
                         data: []
                     })
                 }
@@ -121,19 +121,19 @@ module.exports = {
         }
 
 
-        const { dataValues: newIncome } = await Expenses.create({
+        const { dataValues: newExpense } = await Expenses.create({
             name, user, total: parseInt(total), description, budget, date
         })
 
-        if (newIncome) {
-            console.log('New Expense created', newIncome)
+        if (newExpense) {
+            console.log('New Expense created', newExpense)
 
             const query = {
                 where: { user, name: budget }
             }
-            const incomeBudget = await Budgets.findOne(query)
-            if (incomeBudget) {
-                const updateBudgetBalance = await Budgets.update({ balance: parseInt(incomeBudget.dataValues.balance) + parseInt(total) },
+            const expenseBudget = await Budgets.findOne(query)
+            if (expenseBudget) {
+                const updateBudgetBalance = await Budgets.update({ balance: parseInt(expenseBudget.dataValues.balance) + parseInt(total) },
                     { where: { name: budget, user } })
                 if (updateBudgetBalance) {
                     return res.status(200).json({
@@ -172,19 +172,19 @@ module.exports = {
             })
         }
 
-        const incomeQuery = {
+        const expenseQuery = {
             where: { id: expense, budget, user }
         }
-        const deleteIncome = await Expenses.destroy(incomeQuery)
+        const deleteExpense = await Expenses.destroy(expenseQuery)
 
-        console.log('Deleted Expense', deleteIncome)
-        if (deleteIncome) {
+        console.log('Deleted Expense', deleteExpense)
+        if (deleteExpense) {
             const query = {
                 where: { user, name: budget }
             }
-            const incomeBudget = await Budgets.findOne(query)
-            if (incomeBudget) {
-                const newBalance = parseInt(incomeBudget.dataValues.balance) - parseInt(total)
+            const expenseBudget = await Budgets.findOne(query)
+            if (expenseBudget) {
+                const newBalance = parseInt(expenseBudget.dataValues.balance) - parseInt(total)
 
                 const updateBudgetBalance = await Budgets.update({ balance: newBalance < 0 ? 0 : newBalance  },
                     { where: { name: budget, user } })

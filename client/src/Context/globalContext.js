@@ -18,6 +18,8 @@ export const GlobalProvider = ({ children }) => {
 
 
     const [expenses, setExpenses] = useState([])
+    const [expensesPages, setExpensesPages] = useState(1)
+
     const [error, setError] = useState(null)
     const [dashboard, setDashboard] = useState(null)
     const [userProfile, setUserProfile] = useState({
@@ -307,6 +309,94 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    // Expenses Handler
+
+        // Incomes Handlers
+
+        const getUserExpenses = async (user, budget, pages, sort) => {
+            const token = localStorage.getItem('token');
+            console.log(`Retrieving Expenses for ${userProfile.username || user} ...`);
+            const response = await axios.get(`${BASE_URL}/expense/getExpenses`, {
+                params: { user: userProfile.username || user, budget, pages, sort }, headers: {
+                    Authorization: `Bearer ${auth || token}`
+                }
+            }
+    
+            ).catch(err => {
+                console.error(`There was an error retrieving ${userProfile.username} expenses: `, err)
+                setExpenses([])
+            })
+    
+            if (response) {
+                console.log('Budgets retrieved: ', response.data)
+                const nPages = response.data.pages < 4 ? 1 : Math.ceil(response.data.pages / 4)
+                setExpenses(response.data.data)
+                setExpensesPages(nPages)
+            }
+    
+        }
+    
+        const createUserExpense = async (name, total, description, date, budget) => {
+            console.log(`Creating expense for ${userProfile.username} ...`);
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${BASE_URL}/expense/createExpenses`, { date, budget, name, total, description, user: userProfile.username }, {
+                headers: {
+                    Authorization: `Bearer ${auth || token}`
+                }
+            }).catch(err => {
+                console.error(`There was an error creating ${userProfile.username} expense: `, err)
+    
+            })
+    
+            if (response) {
+                console.log('Expense retrieved: ', response.data)
+                if (response.data.code === 200) {
+                    getUserExpenses(userProfile.username, budget)
+                    toast.success(`Expense created`)
+                }
+            }
+        }
+    
+        const updateCurrentExpense = async (name, total, description, date, budget, expenseId) => {
+            console.log(`Updating current Expense for ${userProfile.username} ...`, expenseId);
+            const token = localStorage.getItem('token');
+            const response = await axios.put(`${BASE_URL}/expense/updateExpenses`, { total, name, description, user: userProfile.username, budget, expenseId, date }, {
+                headers: {
+                    Authorization: `Bearer ${auth || token}`
+                }
+            }).catch(err => {
+                console.error(`There was an error updating ${userProfile.username} Expense: `, err)
+            })
+    
+            if (response) {
+                console.log('Expense updated retrieved: ', response.data)
+                if (response.data.code === 200) {
+                    getUserExpenses(userProfile.username, budget)
+                    toast.success(`Expense updated`)
+                }
+    
+            }
+        }
+    
+        const deleteUserExpense = async (expense, budget, total) => {
+            console.log(`Deleting current Income for ${userProfile.username} ...`);
+            const token = localStorage.getItem('token');
+            const response = await axios.delete(`${BASE_URL}/income/deleteIncomes`, {
+                data: { expense, budget, user: userProfile.username, total }, headers: {
+                    Authorization: `Bearer ${auth || token}`
+                }
+            }).catch(err => {
+                console.error(`There was an error deleting ${userProfile.username} Expense: `, err)
+            })
+            if (response) {
+                console.log('Expense deleted!!', response.data)
+                if (response.data.code === 200) {
+                    getUserExpenses(userProfile.user, budget)
+                    toast.success(`Income delete`)
+                }
+            }
+        }
+
     return (
         <GlobalContext.Provider value={{
             auth,
@@ -314,6 +404,13 @@ export const GlobalProvider = ({ children }) => {
             checkAuth,
             incomes,
             expenses,
+            setExpenses,
+            expensesPages,
+            setExpensesPages,
+            getUserExpenses,
+            createUserExpense,
+            updateCurrentExpense,
+            deleteUserExpense,
             error,
             dashboard,
             setError,

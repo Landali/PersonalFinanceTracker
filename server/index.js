@@ -21,6 +21,7 @@ app.use('/auth', authRouter)
 app.use('/budget', budgetRouter)
 app.use('/income', incomeRouter)
 app.use('/expense', expenseRouter)
+
 db.sequelize.sync().then(() => {
     const port = process.env.SERVER_PORT || 3001
     app.listen(port, () => {
