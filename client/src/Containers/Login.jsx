@@ -79,9 +79,12 @@ const Login = () => {
 
                     <div className="mb-3">
                         <label id='signin-label' className="small mb-1" htmlFor="inputPassword">Password</label>
-                        <input className="form-control" id="inputPassword" type={state.isPasswordVisible ? "text" : "password"} minLength="3" maxLength="15" placeholder="Enter your password" onChange={(e) => handleChange(e)} value={state.password} />
+                       <div className='container--icon-textbox'>
+                       <input className="form-control" id="inputPassword" type={state.isPasswordVisible ? "text" : "password"} minLength="3" maxLength="15" placeholder="Enter your password" onChange={(e) => handleChange(e)} value={state.password} />
                         <i id='toggle-password' className={state.isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'} onClick={() => showPassword()}></i>
-                    </div>
+                       </div>
+                       </div>
+                       <br/>
                     <div id='sigign-link-container' className="d-grid gap-2 d-md-flex justify-content-end">
                         <a id='signin-registration-link' onClick={sendToSignUp}><i id='signin-registration-link-icon' className={'bi bi-person-plus-fill me-1 fs-5'} ></i><span>Don't have a user? Sign Up here!</span></a>
                     </div>

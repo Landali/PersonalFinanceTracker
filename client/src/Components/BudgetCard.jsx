@@ -23,7 +23,7 @@ const BudgetCard = ({ cardClassNames = {}, header = '', title = '', text = '', l
                                         <i id={el.icon.id} className={el.icon.class}></i>
                                     </a>)
                                 } else {
-                                    return (<a id={el.id} href={`${el.href}${budgetId}`} className={el.class}>{el.text}</a>)
+                                    return (<a id={el.id} href={`${el.href}${header}`} className={el.class}>{el.text}</a>)
                                 }
                             }
                             )

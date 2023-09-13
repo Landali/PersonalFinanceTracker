@@ -86,9 +86,11 @@ const Profile = () => {
                     </div>
                     <div className="mb-3">
                         <label id='profile-label' className="small mb-1" htmlFor="inputPassword">Password</label>
+                        <div className='container--icon-textbox'>
                         <input className="form-control" id="inputPassword" type={state.isPasswordVisible ? "text" : "password"} minLength="8" maxLength="15" placeholder="Enter your password" onChange={(e) => handleChange(e)} value={state.password} />
                         <i id='toggle-password' className={state.isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'} onClick={() => showPassword()}></i>
-                    </div>
+                            </div> 
+                        </div>
 
 
                     <div className="row gx-3 mb-3">

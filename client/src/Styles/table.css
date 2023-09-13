@@ -1,0 +1,25 @@
+td, th {
+  text-align: center;
+}
+
+#update-table-icon {
+font-size: 1.2rem;
+cursor: pointer;
+}
+
+#update-table-icon:hover {
+  font-size: 1.3rem;
+  cursor: pointer;
+  color:  #0b9e06cc;
+}
+
+#delete-table-icon {
+  font-size: 1.2rem;
+  cursor: pointer;
+  }
+  
+  #delete-table-icon:hover {
+    font-size: 1.3rem;
+    cursor: pointer;
+    color:  #d80e0eb4;;
+  }
