@@ -29,7 +29,7 @@ A web app application done to do tracking of the users monthly incomes and expen
  6. Open two consoles one for server and other for client.
  7. To start the client write on the console inside of the client folder: npm start
  8. Will take a bit to start locally once it starts check the console to get the links provided to go into the app. NOTE: In case the app doesn't start by any reason do a hard cache clean on the tab or launch it on incognito.
- 9. To start the server write on the console inside of the server folder: npm start
+ 9. To start the server write on the console inside of the server folder: npm run startDev
  10. Once both projects are running you are ready to start. Sequelize will do the neccesary changes on the db once app runs.
 
 
