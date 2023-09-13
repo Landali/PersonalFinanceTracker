@@ -33,6 +33,7 @@ A web app application done to do tracking of the users monthly incomes and expen
  10. Once both projects are running you are ready to start. Sequelize will do the neccesary changes on the db once app runs.
 
 
+
 # Environment Variables
 ```
 - Client
