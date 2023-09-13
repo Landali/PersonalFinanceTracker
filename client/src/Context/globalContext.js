@@ -79,7 +79,7 @@ export const GlobalProvider = ({ children }) => {
             console.error(`Error to Sign In for user: ${data.user}`, err)
             setAuth(err.response.data.data);
         })
-        console.log('Sign in response', response.data.data)
+        console.log('Sign in response', response)
         if (response) {
             const decodedToken = jwt_decode(response.data.data)
             console.log(`Sign in successful for user: ${data.user}`, decodedToken)
@@ -111,18 +111,17 @@ export const GlobalProvider = ({ children }) => {
 
     const updateUserPorfile = async (data = {}) => {
         console.log(`Updating ${userProfile.username} profile ...`);
-        const response = await axios.post(`${BASE_URL}/user/updateprofile`, { ...data }, {
+        const response = await axios.put(`${BASE_URL}/user/updateprofile`, { ...data }, {
             headers: {
                 Authorization: `Bearer ${auth}`
             }
         }).catch(err => {
             console.error(`There was an error updating profile for user ${userProfile.username}: `, err)
-            return {
-            }
         })
-        console.log('User profile retrieved: ', response)
-        if (response.data) {
-            if (response.data.username) {
+       
+        if (response) {
+            console.log('User profile retrieved: ', response)
+            if (response.data) {
                 setUserProfile(response.data)
             }
         }

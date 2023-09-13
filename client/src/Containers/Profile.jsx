@@ -27,7 +27,8 @@ const Profile = () => {
         firstname: "",
         lastname: "",
         email: "",
-        isPasswordVisible: false
+        isPasswordVisible: false,
+        enablePassword: true
     })
 
 
@@ -48,6 +49,10 @@ const Profile = () => {
 
     const showPassword = () => {
         setState({ ...state, isPasswordVisible: !state.isPasswordVisible })
+    }
+    
+    const unlockPassword = () => {
+        setState({ ...state, enablePassword: !state.enablePassword })
     }
 
     const updateProfile = (event, data) => {
@@ -87,8 +92,9 @@ const Profile = () => {
                     <div className="mb-3">
                         <label id='profile-label' className="small mb-1" htmlFor="inputPassword">Password</label>
                         <div className='container--icon-textbox'>
-                        <input className="form-control" id="inputPassword" type={state.isPasswordVisible ? "text" : "password"} minLength="8" maxLength="15" placeholder="Enter your password" onChange={(e) => handleChange(e)} value={state.password} />
+                        <input className="form-control" id="inputPassword" type={state.isPasswordVisible ? "text" : "password"} minLength="4" maxLength="15" placeholder={state.enablePassword ? "Unlock password to change your current password": "Enter your password"} disabled={state.enablePassword} onChange={(e) => handleChange(e)} value={state.password} />
                         <i id='toggle-password' className={state.isPasswordVisible ? 'bi bi-eye-slash' : 'bi bi-eye'} onClick={() => showPassword()}></i>
+                        <i id='toggle-password-unlock' className={state.enablePassword ? 'bi bi-unlock-fill' : 'bi bi-unlock'} onClick={() => unlockPassword()}></i>
                             </div> 
                         </div>
 
