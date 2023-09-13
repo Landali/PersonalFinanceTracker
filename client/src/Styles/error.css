@@ -1,0 +1,5 @@
+#error-warn {
+    color: #e9ecef !important;
+    font-size: 1rem;
+    text-decoration: underline;
+}
