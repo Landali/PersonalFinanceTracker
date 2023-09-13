@@ -15,6 +15,7 @@ import Profile from "./Containers/Profile";
 import Registration from "./Containers/Registration";
 import Budget from "./Containers/Budget";
 import Incomes from "./Containers/Incomes";
+import Expense from "./Containers/Expenses";
 const router = createBrowserRouter([
   {
     path: '/',
@@ -50,7 +51,12 @@ const router = createBrowserRouter([
     path: '/incomes/:id',
     element: <Incomes/>,
     errorElement: <Error />,
-  }
+  },
+  {
+    path: '/expenses/:id',
+    element: <Expense/>,
+    errorElement: <Error />,
+  },
 ]);
 
 function App() {

@@ -1,7 +1,7 @@
 import '../Styles/table.css'
 
 
-const UpdateIconModal = ({ budget, name, description, date, total, incomeId, optionalComponent }) => {
+const UpdateIconModal = ({ budget, name, description, date, total, expenseId, optionalComponent }) => {
     const NewComponent= optionalComponent;
     // ..
     return <NewComponent 
@@ -10,7 +10,7 @@ const UpdateIconModal = ({ budget, name, description, date, total, incomeId, opt
     description={description} 
     date={date} 
     total={total} 
-    incomeId={incomeId} />
+    expenseId={expenseId} />
  }
 
 const Table = ({ headers, body, handleUpdate, handleDelete, updateForm, budget }) => {
@@ -38,7 +38,7 @@ const Table = ({ headers, body, handleUpdate, handleDelete, updateForm, budget }
                             description={el.description} 
                             date={el.date} 
                             total={el.total} 
-                            incomeId={el.id}
+                            expenseId={el.id}
                             optionalComponent={updateForm}/> }</td>
                             <td><i id='delete-table-icon' className="bi bi-trash3" onClick={() => handleDelete(el)}></i></td>
                         </tr>

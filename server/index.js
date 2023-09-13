@@ -14,11 +14,13 @@ const userRouter = require('./routes/Users')
 const authRouter = require('./routes/Auth')
 const budgetRouter = require('./routes/Budgets')
 const incomeRouter = require('./routes/Incomes')
+const expenseRouter = require('./routes/Expenses')
 
 app.use('/user', userRouter)
 app.use('/auth', authRouter)
 app.use('/budget', budgetRouter)
 app.use('/income', incomeRouter)
+app.use('/expense', expenseRouter)
 
 db.sequelize.sync().then(() => {
     const port = process.env.SERVER_PORT || 3001
