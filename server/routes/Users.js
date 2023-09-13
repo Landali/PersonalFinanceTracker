@@ -5,6 +5,6 @@ const { updateProfile } = require('../controllers/Users')
 
 
 
-router.post('/updateprofile', validateToken, updateProfile)
+router.put('/updateprofile', validateToken, updateProfile)
 
 module.exports = router

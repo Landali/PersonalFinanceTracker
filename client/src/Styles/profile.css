@@ -145,3 +145,26 @@
 #profile-clear-btn {
     padding-left: 0.4rem;
 }
+
+.container--icon-textbox {
+    position: relative;
+
+}
+
+.container--icon-textbox i {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+}
+
+.container--icon-textbox i#toggle-password-unlock {
+    position: absolute;
+    top: -30%;
+    left: 90px;
+    transform: translateY(-50%);
+}
+
+#toggle-password-unlock{
+    color: #e9ecef;
+}
