@@ -5,7 +5,7 @@
 1. [Description](#Description)
 2. [How to run it locally](#local-run)
 3. [Environment Variables](#env-variables)
-
+4. [Steps](#steps)
 # Description
 
 Full stack application Nodejs, Express, React My Sql
@@ -76,5 +76,26 @@ ACCESS_TOKEN_EXPIRATION_TIME=20m
 
 SERVER_PORT=3001
 
+NOTE: The envs used for local are the one starting with DEV_. The envs used will be controlled by 
+NODE_ENV env.
+
 
 ```
+
+# Steps
+
+The flow of the app is the following:
+ 1. Once the apps starts it will send you to the sign in view. In there there should be an icon that will allow the user to access the sign up view.
+ 2. Once a user has been acquired the next step is to log in.
+ 3. Once logged the app will send the user towards the user profile view in there you can modify the user profile if wanting.
+ 3. Lets say we want to start doing a budget, on the sidebar there should be a link that will allow access to the budget view.
+ 4. Once on the budget view there should be a button that says add. It will pop out a modal in which we can create a budget. A card will be added to the view.
+ 5. Each card of the budget will have a general information plus the four options: update, expenses, incomes and delete.
+ 6. Incomes and expenses are links that will redirect each to their respective views, delete will just delete the card and update will opena  modal with the loaded options of the budget we want to modify.
+ 7. Both Income and Expenses views work the same manner as to how the view works.
+ 8. A table will be preset on each view and a add controller similar to budgets views will appear.
+ 9. Once clicked it will pop up a modal in which we will add the income or expense.
+ 10. Once done the table will update with the new element. NOTE: Last two elements of the tables are the update and delete controllers of the view.
+ 11. The update cell will open a modal with the loaded settings of the income or expense.
+ 12. The delete cell will delete the cell from the table completely deleting the income or expense and updating the balance on budget.
+ 
