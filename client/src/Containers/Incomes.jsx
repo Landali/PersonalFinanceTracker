@@ -89,17 +89,17 @@ const Incomes = () => {
                         <span id='profile-title-tag' className="brand-name fs-4">My Incomes</span>
                         <hr />
                     </div>
-                    <CreateIncomeModal budget={currentBudget} />
+                    {auth ? <CreateIncomeModal budget={currentBudget} /> : <div />}
 
-                    <Table
+                    {auth ? <Table
                         headers={tableHeaders}
                         body={incomes}
                         handleUpdate={updateIncome}
                         handleDelete={deleteIncome}
                         updateForm={UpdateIncomeModal}
                         budget={currentBudget}
-                    />
-                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={incomesPages} checkBudgetsPerPage={checkIncomesPerPage} sort={6} />
+                    /> : <div />}
+                    {auth ? <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={incomesPages} checkBudgetsPerPage={checkIncomesPerPage} sort={6} />: <div />}
                 </div>
 
 

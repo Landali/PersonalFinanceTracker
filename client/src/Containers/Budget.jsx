@@ -97,7 +97,7 @@ const Budget = () => {
                     </div>
                     {auth ? <CreateBudgetModal /> : <div></div>}
 
-                    <div className="row mb-3">
+                    {auth ?   <div className="row mb-3">
                         {
                             budgets.map(el => (<BudgetCard
                                 cardClassNames={cardClassNames}
@@ -117,7 +117,7 @@ const Budget = () => {
                             />))
                         }
 
-                    </div>
+                    </div> : <div/>}
                    {auth ?  <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={budgetsPages} checkBudgetsPerPage={checkBudgetsPerPage} sort={4}/> : <div></div>}
                 </div>
             </div>
