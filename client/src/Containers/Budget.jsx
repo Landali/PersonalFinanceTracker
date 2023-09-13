@@ -69,20 +69,22 @@ const checkValidSession = (auth, navigate) => {
 const Budget = () => {
 
     const [currentPage, setCurrentPage] = useState(1)
+
     const navigate = useNavigate();
-    const { auth, budgets, getUserBudgets, budgetsPages, deleteUserBudget } = useGlobalContext();
+    const { auth, budgets, getUserBudgets,userProfile, budgetsPages, deleteUserBudget } = useGlobalContext();
     checkValidSession(auth, navigate);
+    console.log('user profile', userProfile)
     const deleteBudget = (id) => {
         console.log('Deleting budget: ', id)
         deleteUserBudget(id)
     }
 
     useEffect(() => {
-        getUserBudgets()
-    }, [auth])
+        getUserBudgets(userProfile.username)
+    }, [auth, userProfile])
 
     const checkBudgetsPerPage = (page, sort) => {
-        getUserBudgets(page, sort)
+        getUserBudgets(userProfile.username, page, sort)
     }
 
     return (

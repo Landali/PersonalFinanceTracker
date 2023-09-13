@@ -41,7 +41,7 @@ const CreateIncomeModal = ({ budget }) => {
 
     const createIncome = (event, data) => {
 
-        console.log('Creating Income', data)
+        console.log('Creating Income', data, budget)
         event.preventDefault();
         createUserIncome(data.name, data.total, data.description, data.date, budget)
         setState({

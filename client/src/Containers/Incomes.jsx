@@ -68,13 +68,14 @@ const Incomes = () => {
     console.log('navigate', getBudget(window.location.pathname))
     const [currentPage, setCurrentPage] = useState(1)
     const [currentBudget, setCurrentBudget] = useState('')
-    const { auth, incomes, incomesPages, getUserIncomes, deleteUserIncome } = useGlobalContext();
+    const { auth, incomes, userProfile, incomesPages, getUserIncomes, deleteUserIncome } = useGlobalContext();
     checkValidSession(auth, navigate)
-    console.log('check budget', getBudget(window.location.pathname))
+
+    
     useEffect(() => {
-        getUserIncomes(getBudget(window.location.pathname))
+        getUserIncomes(userProfile.username, getBudget(window.location.pathname))
         setCurrentBudget(getBudget(window.location.pathname))
-    }, [auth])
+    }, [auth, userProfile])
 
     const updateIncome = (data) => {
         console.log('Updating Income: ', { ...data })

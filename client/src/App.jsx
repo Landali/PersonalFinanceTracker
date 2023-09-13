@@ -53,11 +53,12 @@ const router = createBrowserRouter([
 
 function App() {
 
-  const { auth, setAuth, checkAuth } = useGlobalContext()
-  console.log('authState', auth)
+  const { auth, setAuth, checkAuth, userProfile,updateUserPorfile ,logOut } = useGlobalContext()
+  console.log('authState', userProfile)
   useEffect(() => {
     const token = auth || localStorage.getItem('token') || '';
     checkAuth()
+    updateUserPorfile(userProfile)
     setAuth(token)
   }, [auth]);
 
@@ -69,9 +70,9 @@ function App() {
   return (
     <div className="App">
       <div className="wrapper">
-        {!auth ? <div></div> : <Sidebar toggle={toggle} />}
+        {!auth ? <div></div> : <Sidebar signout={logOut} toggle={toggle} user={userProfile.username} name={`${userProfile.firstname} ${userProfile.lastname}`} />}
         <div className="main">
-        {!auth ? <div></div> : <Nav Toggle={Toggle}></Nav>}
+        {!auth ? <div></div> : <Nav signout={logOut} Toggle={Toggle}></Nav>}
           
           <div id='components'>
             <RouterProvider router={router} />

@@ -1,16 +1,16 @@
 import '../Styles/sidebar.css'
-const Sidebar = ({ toggle }) => {
+const Sidebar = ({ signout, toggle, user, name }) => {
     return (
         <aside id='sidebar' className={toggle ? '' : 'collapsed'}>
             <div className='h-100'>
                 <div className='sidebar-logo'>
                     <i className="bi bi-bootstrap-fill me-3 fs-4"></i>
-                    <span id='sidebar-username-tag' className="brand-name fs-4">Landali</span>
+                    <span id='sidebar-username-tag' className="brand-name fs-4">{user}</span>
                     
                 </div>
                 <ul className='sidebar-nav'>
                     <li className='sidebar-header'>
-                    <span id='sidebar-welcome-tag' className="brand-name">Bienvenido: Allan Danilo Paz  D' Elia</span>
+                    <span id='sidebar-welcome-tag' className="brand-name">{ name? `Welcome ${name}` :'Welcome' }</span>
                     <hr></hr>
                     </li>
                     <li className='sidebar-item rounded'>
@@ -39,7 +39,7 @@ const Sidebar = ({ toggle }) => {
                         </ul>
                     </li>
                     <li className='sidebar-item'>
-                        <a href='#' className='sidebar-link'>
+                        <a href='/' className='sidebar-link' onClick={signout}>
                             <i className="bi bi-power pe-2"></i>
                             <span>Logout</span>
                         </a>
