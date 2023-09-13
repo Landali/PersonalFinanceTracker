@@ -53,11 +53,12 @@ const router = createBrowserRouter([
 
 function App() {
 
-  const { auth, setAuth, checkAuth, userProfile, logOut } = useGlobalContext()
-  console.log('authState', auth)
+  const { auth, setAuth, checkAuth, userProfile,updateUserPorfile ,logOut } = useGlobalContext()
+  console.log('authState', userProfile)
   useEffect(() => {
     const token = auth || localStorage.getItem('token') || '';
     checkAuth()
+    updateUserPorfile(userProfile)
     setAuth(token)
   }, [auth]);
 

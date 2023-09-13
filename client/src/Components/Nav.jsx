@@ -22,7 +22,7 @@ const Nav = ({ signout, Toggle }) => {
                             </span></a>
                         </li>
                         <li className="nav-item rounded">
-                            <a href="/logout" className="nav-link" onClick={signout}><i className="bi bi-power pe-2"></i><span>Logout</span></a>
+                            <a href="/" className="nav-link" onClick={signout}><i className="bi bi-power pe-2"></i><span>Logout</span></a>
                         </li>
                     </ul>
                 </ul>

@@ -39,7 +39,7 @@ const Sidebar = ({ signout, toggle, user, name }) => {
                         </ul>
                     </li>
                     <li className='sidebar-item'>
-                        <a href='#' className='sidebar-link' onClick={signout}>
+                        <a href='/' className='sidebar-link' onClick={signout}>
                             <i className="bi bi-power pe-2"></i>
                             <span>Logout</span>
                         </a>

@@ -31,7 +31,7 @@ export const GlobalProvider = ({ children }) => {
         setBudgetsPages(1)
         setIncomes([])
         setIncomesPages(1)
-        setUserProfile({ username: '', firstname: '', lastname: '', password: '', email: '' })
+        setUserProfile({ })
         localStorage.removeItem('token')
     }
 
@@ -60,6 +60,16 @@ export const GlobalProvider = ({ children }) => {
         })
         if (response) {
             console.log('Token verified as valid!!')
+            const decodedToken = jwt_decode(token)
+
+            const { username, firstname, lastname, email } = decodedToken
+            console.log('decoded token', decodedToken.username)
+            setUserProfile({
+                username: decodedToken.username,
+                firstname: decodedToken.firstname,
+                lastname: decodedToken.lastname,
+                email: decodedToken.email, password: ''
+            })
         }
     }
 
@@ -76,7 +86,14 @@ export const GlobalProvider = ({ children }) => {
             setAuth(response.data.data)
             localStorage.setItem('token', response.data.data)
             const { username, firstname, lastname, email } = decodedToken
-            setUserProfile({ username, firstname, lastname, email, password: '1234' })
+            console.log('decoded token', decodedToken.username)
+            setUserProfile({
+                username: decodedToken.username,
+                firstname: decodedToken.firstname,
+                lastname: decodedToken.lastname,
+                email: decodedToken.email, 
+                password: ''
+            })
         }
     }
     const signUp = async (data = {}) => {
@@ -113,11 +130,11 @@ export const GlobalProvider = ({ children }) => {
 
     // Handler Budget Events
 
-    const getUserBudgets = async (pages, sort) => {
+    const getUserBudgets = async (user, pages, sort) => {
         const token = localStorage.getItem('token');
         console.log(`Retrieving budgets for ${userProfile.username} ...`);
         const response = await axios.get(`${BASE_URL}/budget/getBudgets`, {
-            params: { user: userProfile.username, pages, sort }, headers: {
+            params: { user: userProfile.username || user, pages, sort }, headers: {
                 Authorization: `Bearer ${auth || token}`
             }
         }
@@ -197,11 +214,11 @@ export const GlobalProvider = ({ children }) => {
 
     // Incomes Handlers
 
-    const getUserIncomes = async (budget, pages, sort) => {
+    const getUserIncomes = async (user, budget, pages, sort) => {
         const token = localStorage.getItem('token');
-        console.log(`Retrieving Incomes for ${userProfile.username} ...`);
+        console.log(`Retrieving Incomes for ${userProfile.username || user} ...`);
         const response = await axios.get(`${BASE_URL}/income/getIncomes`, {
-            params: { user: userProfile.username, budget, pages, sort }, headers: {
+            params: { user: userProfile.username || user, budget, pages, sort }, headers: {
                 Authorization: `Bearer ${auth || token}`
             }
         }
@@ -235,7 +252,7 @@ export const GlobalProvider = ({ children }) => {
         if (response) {
             console.log('Budgets retrieved: ', response.data)
             if (response.data.code === 200) {
-                getUserIncomes()
+                getUserIncomes(userProfile.username, budget)
             }
         }
     }
@@ -254,7 +271,7 @@ export const GlobalProvider = ({ children }) => {
         if (response) {
             console.log('Income updated retrieved: ', response.data)
             if (response.data.code === 200) {
-                getUserIncomes(budget)
+                getUserIncomes(userProfile.username, budget)
             }
 
         }
@@ -273,7 +290,7 @@ export const GlobalProvider = ({ children }) => {
         if (response) {
             console.log('Income deleted!!', response.data)
             if (response.data.code === 200) {
-                getUserIncomes(budget)
+                getUserIncomes(userProfile.user, budget)
             }
         }
     }
