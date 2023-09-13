@@ -118,7 +118,7 @@ const Budget = () => {
                         }
 
                     </div>
-                   {auth ?  <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={budgetsPages} checkBudgetsPerPage={checkBudgetsPerPage}/> : <div></div>}
+                   {auth ?  <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={budgetsPages} checkBudgetsPerPage={checkBudgetsPerPage} sort={4}/> : <div></div>}
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-const Pagination = ({ nPages = 5, currentPage = 1, setCurrentPage, checkBudgetsPerPage }) => {
+const Pagination = ({ nPages = 5, currentPage = 1, setCurrentPage, checkBudgetsPerPage, sort }) => {
     // const nPages = Math.ceil(data.length / recordsPerPage)
     const data = 5
 
@@ -10,20 +10,20 @@ const Pagination = ({ nPages = 5, currentPage = 1, setCurrentPage, checkBudgetsP
         console.log('Next page')
         if (currentPage !== nPages) {
             setCurrentPage(currentPage + 1)
-            checkBudgetsPerPage(currentPage + 1, 4)
+            checkBudgetsPerPage(currentPage + 1, sort)
         }
     }
     const prevPage = () => {
         console.log('Previous page')
         if (currentPage !== 1) {
             setCurrentPage(currentPage - 1)
-            checkBudgetsPerPage(currentPage - 1, 4)
+            checkBudgetsPerPage(currentPage - 1, sort)
         }
     }
 
     const setPaginationPageNumber = (pgNumber) => {
         setCurrentPage(pgNumber)
-        checkBudgetsPerPage(pgNumber, 4)
+        checkBudgetsPerPage(pgNumber, sort)
     }
 
     return (

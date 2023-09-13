@@ -99,7 +99,7 @@ const Incomes = () => {
                         updateForm={UpdateIncomeModal}
                         budget={currentBudget}
                     />
-                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={incomesPages} checkBudgetsPerPage={checkIncomesPerPage} />
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={incomesPages} checkBudgetsPerPage={checkIncomesPerPage} sort={6} />
                 </div>
 
 
