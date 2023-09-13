@@ -20,9 +20,20 @@ export const GlobalProvider = ({ children }) => {
     const [error, setError] = useState(null)
     const [dashboard, setDashboard] = useState(null)
     const [userProfile, setUserProfile] = useState({
-        username: 'Landali', firstname: 'Allan', lastname: 'Paz', password: '1234', email: 'lan@gmail.com'
+        username: '', firstname: '', lastname: '', password: '', email: ''
     })
 
+
+
+    const logOut = () => {
+        setAuth('')
+        setBudgets([])
+        setBudgetsPages(1)
+        setIncomes([])
+        setIncomesPages(1)
+        setUserProfile({ username: '', firstname: '', lastname: '', password: '', email: '' })
+        localStorage.removeItem('token')
+    }
 
     // Mock Up Service
 
@@ -249,7 +260,7 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
-    const deleteUserIncome = async (income, budget, total ) => {
+    const deleteUserIncome = async (income, budget, total) => {
         console.log(`Deleting current Income for ${userProfile.username} ...`);
         const token = localStorage.getItem('token');
         const response = await axios.delete(`${BASE_URL}/income/deleteIncomes`, {
@@ -295,7 +306,8 @@ export const GlobalProvider = ({ children }) => {
             getUserIncomes,
             createUserIncome,
             updateCurrentIncome,
-            deleteUserIncome
+            deleteUserIncome,
+            logOut
         }}>
             {children}
         </GlobalContext.Provider>

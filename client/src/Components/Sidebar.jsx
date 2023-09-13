@@ -1,5 +1,5 @@
 import '../Styles/sidebar.css'
-const Sidebar = ({ toggle, user, name }) => {
+const Sidebar = ({ signout, toggle, user, name }) => {
     return (
         <aside id='sidebar' className={toggle ? '' : 'collapsed'}>
             <div className='h-100'>
@@ -39,7 +39,7 @@ const Sidebar = ({ toggle, user, name }) => {
                         </ul>
                     </li>
                     <li className='sidebar-item'>
-                        <a href='#' className='sidebar-link'>
+                        <a href='#' className='sidebar-link' onClick={signout}>
                             <i className="bi bi-power pe-2"></i>
                             <span>Logout</span>
                         </a>
