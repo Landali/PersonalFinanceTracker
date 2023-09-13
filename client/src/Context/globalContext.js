@@ -249,6 +249,24 @@ export const GlobalProvider = ({ children }) => {
         }
     }
 
+    const deleteUserIncome = async (income, budget, total ) => {
+        console.log(`Deleting current Income for ${userProfile.username} ...`);
+        const token = localStorage.getItem('token');
+        const response = await axios.delete(`${BASE_URL}/income/deleteIncomes`, {
+            data: { income, budget, user: userProfile.username, total }, headers: {
+                Authorization: `Bearer ${auth || token}`
+            }
+        }).catch(err => {
+            console.error(`There was an error deleting ${userProfile.username} Income: `, err)
+        })
+        if (response) {
+            console.log('Income deleted!!', response.data)
+            if (response.data.code === 200) {
+                getUserIncomes(budget)
+            }
+        }
+    }
+
     return (
         <GlobalContext.Provider value={{
             auth,
@@ -276,7 +294,8 @@ export const GlobalProvider = ({ children }) => {
             setIncomesPages,
             getUserIncomes,
             createUserIncome,
-            updateCurrentIncome
+            updateCurrentIncome,
+            deleteUserIncome
         }}>
             {children}
         </GlobalContext.Provider>

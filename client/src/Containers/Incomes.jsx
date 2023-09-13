@@ -59,7 +59,7 @@ const Incomes = () => {
     console.log('navigate', getBudget(window.location.pathname))
     const [currentPage, setCurrentPage] = useState(1)
     const [currentBudget, setCurrentBudget] = useState('')
-    const { auth, incomes, incomesPages, getUserIncomes } = useGlobalContext();
+    const { auth, incomes, incomesPages, getUserIncomes, deleteUserIncome } = useGlobalContext();
 
     console.log('check budget', getBudget(window.location.pathname))
     useEffect(() => {
@@ -73,6 +73,7 @@ const Incomes = () => {
 
     const deleteIncome = (data) => {
         console.log('Deleting Income: ', { ...data })
+        deleteUserIncome(data.id, data.budget, data.total)
     }
 
     const checkIncomesPerPage = (page, sort) => {

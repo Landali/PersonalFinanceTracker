@@ -162,7 +162,7 @@ module.exports = {
         })
     },
     async deleteIncomes(req, res) {
-        console.log('Deleting user incomes ...')
+        console.log('Deleting user incomes ...', req.body)
         const { income, budget, user, total } = req.body
         if (!income || !budget || !user || !total) {
             return res.status(301).json({

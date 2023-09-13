@@ -41,11 +41,6 @@ const CreateBudgetModal = () => {
         console.log('Creating budget', data)
         event.preventDefault();
         createNewBudget(data.name, parseFloat(data.balance, 10), data.description)
-        setState({
-            name: "",
-            balance: "",
-            description: ""
-        })
     }
 
     return (

@@ -176,3 +176,15 @@
     color: #e9ecef;
     font-size: 1.2rem!important;
 }
+
+.container--icon-textbox{
+    position: relative;
+
+}
+
+.container--icon-textbox i {
+position: absolute;
+top: 50%;
+right: 16px;
+transform: translateY(-50%);
+}
