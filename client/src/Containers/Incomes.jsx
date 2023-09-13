@@ -48,19 +48,28 @@ const tableBody = [
     }
 ];
 
+const checkValidSession = (auth, navigate) => {
+    if (!auth) {
+        navigate('/');
+    }
+}
+
 const getBudget = (path) => {
     let budget = path.split('incomes/')[1]
-    budget = budget.replace(/%20/g, " ")
-    return budget;
+    if (budget) {
+        budget = budget.replace(/%20/g, " ")
+        return budget;
+    }
 }
 
 const Incomes = () => {
     const navigate = useNavigate()
+
     console.log('navigate', getBudget(window.location.pathname))
     const [currentPage, setCurrentPage] = useState(1)
     const [currentBudget, setCurrentBudget] = useState('')
     const { auth, incomes, incomesPages, getUserIncomes, deleteUserIncome } = useGlobalContext();
-
+    checkValidSession(auth, navigate)
     console.log('check budget', getBudget(window.location.pathname))
     useEffect(() => {
         getUserIncomes(getBudget(window.location.pathname))
@@ -99,7 +108,7 @@ const Incomes = () => {
                         updateForm={UpdateIncomeModal}
                         budget={currentBudget}
                     /> : <div />}
-                    {auth ? <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={incomesPages} checkBudgetsPerPage={checkIncomesPerPage} sort={6} />: <div />}
+                    {auth ? <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} nPages={incomesPages} checkBudgetsPerPage={checkIncomesPerPage} sort={6} /> : <div />}
                 </div>
 
 
