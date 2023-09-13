@@ -6,6 +6,8 @@ import Error from "./Containers/Error";
 import { useGlobalContext } from './Context/globalContext';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Sidebar from "./Components/Sidebar";
 import Nav from './Components/Nav';
 import { useState, useEffect } from "react";
@@ -76,6 +78,7 @@ function App() {
           
           <div id='components'>
             <RouterProvider router={router} />
+            <ToastContainer />
           </div>
         </div>
 

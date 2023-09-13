@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react"
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
+import { toast } from "react-toastify";
 
 // NOTE: Add url to react env
 const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:3001";
@@ -26,6 +27,7 @@ export const GlobalProvider = ({ children }) => {
 
 
     const logOut = () => {
+        toast.error(`Sign out Sucessful. We hope to see you soon.`)
         setAuth('')
         setBudgets([])
         setBudgetsPages(1)
@@ -33,6 +35,7 @@ export const GlobalProvider = ({ children }) => {
         setIncomesPages(1)
         setUserProfile({ })
         localStorage.removeItem('token')
+   
     }
 
     // Mock Up Service
@@ -83,10 +86,12 @@ export const GlobalProvider = ({ children }) => {
         if (response) {
             const decodedToken = jwt_decode(response.data.data)
             console.log(`Sign in successful for user: ${data.user}`, decodedToken)
+            
             setAuth(response.data.data)
             localStorage.setItem('token', response.data.data)
             const { username, firstname, lastname, email } = decodedToken
             console.log('decoded token', decodedToken.username)
+            toast.success(`Welcome ${username}`)
             setUserProfile({
                 username: decodedToken.username,
                 firstname: decodedToken.firstname,
@@ -101,6 +106,7 @@ export const GlobalProvider = ({ children }) => {
             console.error(`Sign in successful for user: ${data.username}`, err)
         })
         if (response) {
+            toast.success(`Personal Fin Tracker user created: ${data.username}`)
             console.log(`Sign in successful for user: ${data.username}`, response.data.data)
         }
     }
@@ -122,6 +128,7 @@ export const GlobalProvider = ({ children }) => {
         if (response) {
             console.log('User profile retrieved: ', response)
             if (response.data) {
+                toast.success(`Your profile was updating sucessfully  ${userProfile.username}`)
                 setUserProfile(response.data)
             }
         }
@@ -168,6 +175,7 @@ export const GlobalProvider = ({ children }) => {
             console.log('Budgets retrieved: ', response.data)
             if (response.data.code === 200) {
                 getUserBudgets()
+                toast.success(`Budgets created`)
             }
 
         }
@@ -188,6 +196,7 @@ export const GlobalProvider = ({ children }) => {
             console.log('Budgets updated retrieved: ', response.data)
             if (response.data.code === 200) {
                 getUserBudgets()
+                toast.success(`Budget Updated`)
             }
 
         }
@@ -207,6 +216,7 @@ export const GlobalProvider = ({ children }) => {
             console.log('Budget deleted!!', response.data)
             if (response.data.code === 200) {
                 getUserBudgets()
+                toast.success(`Budgets Deleted`)
             }
         }
     }
@@ -252,6 +262,7 @@ export const GlobalProvider = ({ children }) => {
             console.log('Budgets retrieved: ', response.data)
             if (response.data.code === 200) {
                 getUserIncomes(userProfile.username, budget)
+                toast.success(`Income created`)
             }
         }
     }
@@ -271,6 +282,7 @@ export const GlobalProvider = ({ children }) => {
             console.log('Income updated retrieved: ', response.data)
             if (response.data.code === 200) {
                 getUserIncomes(userProfile.username, budget)
+                toast.success(`Income updated`)
             }
 
         }
@@ -290,6 +302,7 @@ export const GlobalProvider = ({ children }) => {
             console.log('Income deleted!!', response.data)
             if (response.data.code === 200) {
                 getUserIncomes(userProfile.user, budget)
+                toast.success(`Income delete`)
             }
         }
     }
