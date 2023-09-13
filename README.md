@@ -26,7 +26,7 @@ A web app application done to do tracking of the users monthly incomes and expen
  3. Once backend is done write on command line cd ..
  4. Write once more cd client
  5. Once inside of the client folder do a npm install. This will install all the packages needed for front end side.
- 6. Open two consoles one for server and other for client.
+ 6. Open two consoles one for server and other for client. NOTE: Make sure to be on the main branch of the project.
  7. To start the client write on the console inside of the client folder: npm start
  8. Will take a bit to start locally once it starts check the console to get the links provided to go into the app. NOTE: In case the app doesn't start by any reason do a hard cache clean on the tab or launch it on incognito.
  9. To start the server write on the console inside of the server folder: npm run startDev
