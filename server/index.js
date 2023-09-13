@@ -25,6 +25,6 @@ db.sequelize.sync().then(() => {
     app.listen(port, () => {
         console.log('Server running at port: ', port)
     }) // selecting port to initialize app
-})
+}).catch(err=> console.error(err))
 
 
